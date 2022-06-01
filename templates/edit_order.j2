@@ -1,0 +1,68 @@
+<html>
+
+<head>
+	<title>Edit Order</title>
+    <link href="style.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+    <div>
+        <table border="1" cellpadding="5">
+            <!-- Access data tuple passed from app.py --> 
+            {% if orders %}
+			    <thead>
+				    <tr>
+					    <!-- Iterate through each key in the first entry to get the column name -->
+                        {% for key in ord[0].keys() %}
+					    
+                        <!-- Create a <th> tag with the key inside of it, this will be our header row -->
+					    <th scope="col" data-field="{{ key }}" data-filter-control="input">{{ key }}</th>
+					
+                        <!-- End of this for loop -->
+                        {% endfor %} 
+                    </tr>
+
+				<tbody>
+					<!-- Now, iterate through every item in data -->{% for order in orders %}
+					    <tr>
+						    <!-- Then iterate through every key in the current item dictionary -->
+                            {% for key in order.keys() %}
+
+						    <!-- Create a <td> element with the value of that key in it -->
+						    <td> {{order[key]}} </td> 
+                            {% endfor %}
+					    </tr> 
+                        {% endfor %} 
+            {% endif %} 
+        </table>   
+
+        <div id="update">
+            <!-- form to edit data in bsg_people-->
+            <form id="updateOrder" action="/edit_order/{{data[0].order_id}}" method="post">
+                <legend><strong>Edit Order</strong></legend>
+                <fieldset>
+                    <input type="hidden" value="{{data[0].order_id}}" class="form-control" id="order_id" name="order_id" required>
+                    
+                    <label for="guest_id">Guest_ID:</label>
+                    <input type="text" value="{{data[0].guest_id}}" class="form-control" id="guest_id" name="guest_id" pattern="{1-9}" required>
+
+                    <label> Season Pass Holder: </label> <select name="season_pass_holder" value="1" required>
+                    <option value="1">Yes</option>
+                    <option value="0">No</option>
+                    </select>
+
+                    <label for="date">Date:</label>
+                    <input type="text" value="{{data[0].date}}" class="form-control" id="date" name="date">
+
+                   <label> Ticket: </label> <select name="ticket" value="1" required>
+                    <option value="1">Yes</option>
+                    <option value="0">No</option>
+                    </select>
+                
+
+                </fieldset>
+                <input type="submit" value="Save Update Order" name="edit_order" class="btn btn-primary" style="margin:.5rem;">
+                <a href='/orders'><input class="btn" type="button" value="cancel"></a>
+            </form>
+
+</html>

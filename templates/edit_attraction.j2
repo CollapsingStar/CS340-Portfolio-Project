@@ -1,0 +1,60 @@
+<html>
+
+<head>
+	<title>Edit Attraction</title>
+    <link href="style.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+    <div>
+        <table border="1" cellpadding="5">
+            <!-- Access data tuple passed from app.py --> 
+            {% if attractions %}
+			    <thead>
+				    <tr>
+					    <!-- Iterate through each key in the first entry to get the column name -->
+                        {% for key in attr[0].keys() %}
+					    
+                        <!-- Create a <th> tag with the key inside of it, this will be our header row -->
+					    <th scope="col" data-field="{{ key }}" data-filter-control="input">{{ key }}</th>
+					
+                        <!-- End of this for loop -->
+                        {% endfor %} 
+                    </tr>
+
+				<tbody>
+					<!-- Now, iterate through every item in data -->{% for attr in attractions %}
+					    <tr>
+						    <!-- Then iterate through every key in the current item dictionary -->
+                            {% for key in attr.keys() %}
+
+						    <!-- Create a <td> element with the value of that key in it -->
+						    <td> {{attr[key]}} </td> 
+                            {% endfor %}
+					    </tr> 
+                        {% endfor %} 
+            {% endif %} 
+        </table>   
+
+        <div id="update">
+            <!-- form to edit data in bsg_people-->
+            <form id="updateAttractions" action="/edit_attraction/{{data[0].ride_id}}" method="post">
+                <legend><strong>Edit Order</strong></legend>
+                <fieldset>
+                    <input type="hidden" value="{{data[0].ride_id}}" class="form-control" id="ride_id" name="ride_id" required>
+                    
+                    <label for="date">Num Riders:</label>
+                    <input type="text" value="{{data[0].num_riders}}" class="form-control" id="num_riders" name="num_riders" required>
+
+                    <label for="date">Ride Name:</label>
+                    <input type="text" value="{{data[0].ride_name}}" class="form-control" id="ride_name" name="ride_name" required>
+
+                    <label> Date: </label> <input type="date" name="date_created" required>
+                
+
+                </fieldset>
+                <input type="submit" value="Save Attraction" name="edit_attraction" class="btn btn-primary" style="margin:.5rem;">
+                <a href='/attractions'><input class="btn" type="button" value="cancel"></a>
+            </form>
+
+</html>

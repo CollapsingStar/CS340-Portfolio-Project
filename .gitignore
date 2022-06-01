@@ -1,0 +1,11 @@
+# Portfolio Project exlusion paths
+/include
+/lib
+/lib64
+/static
+/venv
+/bin
+pyvenv.cfg
+pip-selfcheck.json
+app_cpy.py
+__pycache__

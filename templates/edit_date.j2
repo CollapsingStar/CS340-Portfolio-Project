@@ -1,0 +1,60 @@
+<html>
+
+<head>
+	<title>Edit Date</title>
+    <link href="style.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+    <div>
+        <table border="1" cellpadding="5">
+            <!-- Access data tuple passed from app.py --> 
+            {% if dates %}
+			    <thead>
+				    <tr>
+					    <!-- Iterate through each key in the first entry to get the column name -->
+                        {% for key in date[0].keys() %}
+					    
+                        <!-- Create a <th> tag with the key inside of it, this will be our header row -->
+					    <th scope="col" data-field="{{ key }}" data-filter-control="input">{{ key }}</th>
+					
+                        <!-- End of this for loop -->
+                        {% endfor %} 
+                    </tr>
+
+				<tbody>
+					<!-- Now, iterate through every item in data -->{% for attr in attractions %}
+					    <tr>
+						    <!-- Then iterate through every key in the current item dictionary -->
+                            {% for key in date.keys() %}
+
+						    <!-- Create a <td> element with the value of that key in it -->
+						    <td> {{date[key]}} </td> 
+                            {% endfor %}
+					    </tr> 
+                        {% endfor %} 
+            {% endif %} 
+        </table>   
+
+        <div id="update">
+            <!-- form to edit data in bsg_people-->
+            <form id="updateDate" action="/edit_date/{{data[0].date}}" method="post">
+                <legend><strong>Edit Date</strong></legend>
+                <fieldset>
+                    <input type="hidden" value="{{data[0].date}}" class="form-control" id="date" name="date" required>
+                    
+                    <label for="date">Day of Week</label>
+                    <input type="text" value="{{data[0].day_of_week}}" class="form-control" id="day_of_week" name="day_of_week" required>
+
+                    <label for="date">Holiday:</label>
+                    <input type="text" value="{{data[0].holiday}}" class="form-control" id="holiday" name="holiday" required>
+
+                    <label> Weather: </label> <input type="weather" name="weather" required>
+                
+
+                </fieldset>
+                <input type="submit" value="Save Date" name="edit_date" class="btn btn-primary" style="margin:.5rem;">
+                <a href='/attractions'><input class="btn" type="button" value="cancel"></a>
+            </form>
+
+</html>

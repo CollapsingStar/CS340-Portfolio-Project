@@ -1,0 +1,147 @@
+<html>
+<head>
+<title>Master Table</title>
+<link href="style.css" rel="stylesheet" type="text/css" />
+<script language="JavaScript">
+		function showform(dowhat) {
+			/*
+			* four DIVS: browse, insert, update, delete
+			* this function sets one visible the others not
+			*/
+			if (dowhat == 'insert'){
+				document.getElementById('browse').style.display = 'none';
+				document.getElementById('insert').style.display = 'block';
+				document.getElementById('update').style.display = 'none';
+				document.getElementById('delete').style.display = 'none';
+			}
+			else if (dowhat == 'update'){
+				document.getElementById('browse').style.display = 'none';
+				document.getElementById('insert').style.display = 'none';
+				document.getElementById('update').style.display = 'block';
+				document.getElementById('delete').style.display = 'none';
+			}
+			else if (dowhat == 'delete'){
+				document.getElementById('browse').style.display = 'none';
+				document.getElementById('insert').style.display = 'none';
+				document.getElementById('update').style.display = 'none';
+				document.getElementById('delete').style.display = 'block';
+			}
+      else if (dowhat == 'all'){
+				document.getElementById('browse').style.display = 'block';
+				document.getElementById('insert').style.display = 'block';
+				document.getElementById('update').style.display = 'block';
+				document.getElementById('delete').style.display = 'block';
+			}
+			else { //by default display browse
+				document.getElementById('browse').style.display = 'block';
+				document.getElementById('insert').style.display = 'none';
+				document.getElementById('update').style.display = 'none';
+				document.getElementById('delete').style.display = 'none';
+			}
+		}
+    function newMaster() { showform('insert'); }
+    function updateMaster(pid) { showform('update'); }
+    function deleteMaster(pid) { showform ('delete'); }
+    function browseMasters() { showform ('browse'); }
+    function showAll() { showform ('all'); }
+</script>
+</head>
+
+<body onload="browseMasters()">
+    <h1>Summary of Information</h1>
+    <h2>View the master records for the park.</h2>
+    [
+    <a href="home">Home Page</a> |
+    <a href="guests">Guests</a> |
+    <a href="orders">Orders</a> |
+    <a href="attractions">Attractions</a> |
+    <a href="dates">Dates</a> |
+    <a href="guests_has_attractions">Rides Ridden by Guests</a> |
+    <a href="master_table">Master Table</a>
+    ]
+ 
+    <div id="browse"
+    <p> </p>
+    <p>Master Table</p>
+
+<table border="1" cellpadding="5">
+            <!-- Access data tuple passed from app.py --> 
+            {% if master_table %}
+			    <thead>
+				    <tr>
+					    <!-- Iterate through each key in the first entry to get the column name -->
+                        {% for key in master_table[0].keys() %}
+					    
+                        <!-- Create a <th> tag with the key inside of it, this will be our header row -->
+					    <th scope="col" data-field="{{ key }}" data-filter-control="input">{{ key }}</th>
+					
+                        <!-- End of this for loop -->
+                        {% endfor %} 
+                        <th colspan = "2"> Modify </th>
+                    </tr>
+
+				<tbody>
+					<!-- Now, iterate through every item in data -->{% for table in master_table %}
+					    <tr>
+						    <!-- Then iterate through every key in the current item dictionary -->
+                            {% for key in table.keys() %}
+
+						    <!-- Create a <td> element with the value of that key in it -->
+						    <td> {{table[key]}} </td> 
+                            {% endfor %}
+
+                            <!-- Create our edit/delete buttons -->
+						    <td><a href="edit_table/{{table.table_id}}" class="btn btn-default">Edit</a></td>
+						    <td><a href="delete_table/{{table.table_id}}" class="btn btn-default">Delete</a></td>
+
+					    </tr> 
+                        {% endfor %} 
+                {% endif %} 
+        </table>   
+
+    <p></p>
+    <input type="submit" value="Add to Master Table Record" onClick="newMaster()">
+    </div> <!-- end of browse -->
+    <div id="insert">
+        <form method="POST" id="addMaster">
+            <p></p>
+            <legend><strong>Add to Master</strong></legend>
+              <fieldset class="fields">
+                <label> Date: </label> <input type="text" name="date" required>
+                <label> Total Guests: </label> <input type="number" name="total_guests" required>
+                <label> Total Riders: </label> <input type="number" name="total_riders">
+          </fieldset>
+              <input class="btn" type="submit" id="addRide" value="Add to Master">
+              <input class="btn" type="button" value="Cancel" onClick="browseMasters()">
+        </form> 
+    </div><!-- insert -->
+    <p>&nbsp;</p>
+    <div id="update">
+        <form method="POST" id="updateMaster">
+            <legend><strong>Update Ride</strong></legend>
+              <fieldset class="fields">
+              <input type="hidden" name="Date" id="date" value="1">
+              <label> Total Guests: </label> <input type="number" name="total_guests" value="156" required>
+              <label> Total Riders: </label> <input type="number" name="total_riders" value="32">
+                <label> Date </label> <input type="date" name="date" value="2022-04-23" required>
+          </fieldset>
+              <input class="btn" type="submit" id="UpdateSaveMaster" value="Save Update to Master">
+              <input class="btn" type="button" value="Cancel" onClick="browseMasters()">
+        </form> 
+    </div><!-- update -->
+    <p>&nbsp;</p>
+    <div id="delete" style="display: block">
+      <form method="POST" id="deleteMaster">
+          <legend><strong>Delete from Master</strong></legend>
+              <fieldset class="fields">
+              <p>Are you sure you wish to delete the following?</p>
+              <input type="hidden" name="date" id="deletepersonID" value="1">
+              <label><strong>Date:</strong></label> 2022-04-23
+                
+        </fieldset>
+        <input class="btn" type="submit" id="deleteMaster" value="Delete from Master">
+              <input class="btn" type="button" value="Cancel" onClick="browseMasters()">
+      </form> 
+    </div>
+</body>
+</html>

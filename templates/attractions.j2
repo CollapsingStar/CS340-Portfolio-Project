@@ -1,0 +1,136 @@
+<html>
+<head>
+<title>Attractions</title>
+<link href="style.css" rel="stylesheet" type="text/css" />
+<script language="JavaScript">
+		function showform(dowhat) {
+			/*
+			* four DIVS: browse, insert, update, delete
+			* this function sets one visible the others not
+			*/
+			if (dowhat == 'insert'){
+				document.getElementById('browse').style.display = 'none';
+				document.getElementById('insert').style.display = 'block';
+				document.getElementById('update').style.display = 'none';
+				document.getElementById('delete').style.display = 'none';
+			}
+			else if (dowhat == 'update'){
+				document.getElementById('browse').style.display = 'none';
+				document.getElementById('insert').style.display = 'none';
+				document.getElementById('update').style.display = 'block';
+				document.getElementById('delete').style.display = 'none';
+			}
+			else if (dowhat == 'delete'){
+				document.getElementById('browse').style.display = 'none';
+				document.getElementById('insert').style.display = 'none';
+				document.getElementById('update').style.display = 'none';
+				document.getElementById('delete').style.display = 'block';
+			}
+      else if (dowhat == 'all'){
+				document.getElementById('browse').style.display = 'block';
+				document.getElementById('insert').style.display = 'block';
+				document.getElementById('update').style.display = 'block';
+				document.getElementById('delete').style.display = 'block';
+			}
+			else { //by default display browse
+				document.getElementById('browse').style.display = 'block';
+				document.getElementById('insert').style.display = 'none';
+				document.getElementById('update').style.display = 'none';
+				document.getElementById('delete').style.display = 'none';
+			}
+		}
+    function newAttr() { showform('insert'); }
+    function updateAttr(pid) { showform('update'); }
+    function deleteAttr(pid) { showform ('delete'); }
+    function browseAttrs() { showform ('browse'); }
+    function showAll() { showform ('all'); }
+</script>
+</head>
+
+<body onload="browseAttrs()">
+    <h1>Attractions</h1>
+    <h2>Manage the Attractions in the park. </h2>
+    [
+    <a href="home">Home Page</a> |
+    <a href="guests">Guests</a> |
+    <a href="orders">Orders</a> |
+    <a href="attractions">Attractions</a> |
+    <a href="dates">Dates</a> |
+    <a href="guests_has_attractions">Rides Ridden by Guests</a> |
+    <a href="master_table">Master Table</a>
+    ]
+
+    <div id="browse"
+    <p> </p>
+    <p>Attractions</p>
+
+<table border="1" cellpadding="5">
+            <!-- Access data tuple passed from app.py --> 
+            {% if attractions %}
+			    <thead>
+				    <tr>
+					    <!-- Iterate through each key in the first entry to get the column name -->
+                        {% for key in attractions[0].keys() %}
+					    
+                        <!-- Create a <th> tag with the key inside of it, this will be our header row -->
+					    <th scope="col" data-field="{{ key }}" data-filter-control="input">{{ key }}</th>
+					
+                        <!-- End of this for loop -->
+                        {% endfor %} 
+                        <th colspan = "2"> Modify </th>
+                    </tr>
+
+				<tbody>
+					<!-- Now, iterate through every item in data -->{% for attraction in attractions %}
+					    <tr>
+						    <!-- Then iterate through every key in the current item dictionary -->
+                            {% for key in attraction.keys() %}
+
+						    <!-- Create a <td> element with the value of that key in it -->
+						    <td> {{attraction[key]}} </td> 
+                            {% endfor %}
+
+                            <!-- Create our edit/delete buttons -->
+						    <td><a href="edit_attraction/{{attraction.ride_id}}" class="btn btn-default">Edit</a></td>
+						    <td><a href="delete_attraction/{{attraction.ride_id}}" class="btn btn-default">Delete</a></td>
+
+					    </tr> 
+                        {% endfor %} 
+                {% endif %} 
+        </table>   
+
+
+    <p></p>
+    <input type="submit" value="Add Ride" onClick="newAttr()">
+    </div> <!-- end of browse -->
+    <div id="insert">
+        <form method="POST" id="addRide">
+            <p></p>
+            <legend><strong>Add Ride</strong></legend>
+              <fieldset class="fields">
+                <label> Ride Name </label> <input type="text" name="ride_name" required>
+                <label> Date Created </label> <input type="date" name="date_created" required>
+          </fieldset>
+              <input class="btn" type="submit" id="addRide" value="Add Ride">
+              <input class="btn" type="button" value="Cancel" onClick="browseAttrs()">
+        </form> 
+    </div><!-- insert -->
+    <p>&nbsp;</p>
+    <div id="update">
+        <form method="POST" id="updateAttr">
+            <legend><strong>Update Ride</strong></legend>
+              <fieldset class="fields">
+              <input type="hidden" name="Ride ID" id="updaterideID" value="1">
+              <label> ID: </label> 1
+                <label> Ride Name </label> <input type="text" name="ride_name" value="Medusa" required>
+                <label> Number of Riders </label> <input type="number" name="num_riders" value="6" required> 
+                <label> Date </label> <input type="date" name="date" value="2022-04-02" required>
+          </fieldset>
+              <input class="btn" type="submit" id="UpdateSaveRide" value="Save Update Ride">
+              <input class="btn" type="button" value="Cancel" onClick="browseAttrs()">
+        </form> 
+    </div><!-- update -->
+    <p>&nbsp;</p>
+
+</body>
+</html>

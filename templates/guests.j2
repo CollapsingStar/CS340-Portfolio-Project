@@ -1,0 +1,139 @@
+<html>
+<head>
+<title>Guests</title>
+<link href="style.css" rel="stylesheet" type="text/css" />
+<script language="JavaScript">
+		function showform(dowhat) {
+			/*
+			* four DIVS: browse, insert, update, delete
+			* this function sets one visible the others not
+			*/
+			if (dowhat == 'insert'){
+				document.getElementById('browse').style.display = 'none';
+				document.getElementById('insert').style.display = 'block';
+				document.getElementById('update').style.display = 'none';
+				document.getElementById('delete').style.display = 'none';
+			}
+			else if (dowhat == 'update'){
+				document.getElementById('browse').style.display = 'none';
+				document.getElementById('insert').style.display = 'none';
+				document.getElementById('update').style.display = 'block';
+				document.getElementById('delete').style.display = 'none';
+			}
+			else if (dowhat == 'delete'){
+				document.getElementById('browse').style.display = 'none';
+				document.getElementById('insert').style.display = 'none';
+				document.getElementById('update').style.display = 'none';
+				document.getElementById('delete').style.display = 'block';
+			}
+      else if (dowhat == 'all'){
+				document.getElementById('browse').style.display = 'block';
+				document.getElementById('insert').style.display = 'block';
+				document.getElementById('update').style.display = 'block';
+				document.getElementById('delete').style.display = 'block';
+			}
+			else { //by default display browse
+				document.getElementById('browse').style.display = 'block';
+				document.getElementById('insert').style.display = 'none';
+				document.getElementById('update').style.display = 'none';
+				document.getElementById('delete').style.display = 'none';
+			}
+		}
+    function newGuest() { showform('insert'); }
+    function updateGuest(pid) { showform('update'); }
+    function deleteGuest(pid) { showform ('delete'); }
+    function browseGuests() { showform ('browse'); }
+    function showAll() { showform ('all'); }
+</script>
+</head>
+
+<body onload="browseGuests()">
+    <h1>Guests</h1>
+    <h2>View the guests currently registered with the park.</h2>
+    [
+    <a href="home">Home Page</a> |
+    <a href="guests">Guests</a> |
+    <a href="orders">Orders</a> |
+    <a href="attractions">Attractions</a> |
+    <a href="dates">Dates</a> |
+    <a href="guests_has_attractions">Rides Ridden by Guests</a> |
+    <a href="master_table">Master Table</a>
+    ]
+
+    <div id="browse"
+    <p> </p>
+    <p>Guests</p>
+
+<table border="1" cellpadding="5">
+            <!-- Access data tuple passed from app.py --> 
+            {% if guests %}
+			    <thead>
+				    <tr>
+					    <!-- Iterate through each key in the first entry to get the column name -->
+                        {% for key in guests[0].keys() %}
+					    
+                        <!-- Create a <th> tag with the key inside of it, this will be our header row -->
+					    <th scope="col" data-field="{{ key }}" data-filter-control="input">{{ key }}</th>
+					
+                        <!-- End of this for loop -->
+                        {% endfor %} 
+                        <th colspan = "2"> Modify </th>
+                    </tr>
+
+				<tbody>
+					<!-- Now, iterate through every item in data -->{% for guest in guests %}
+					    <tr>
+						    <!-- Then iterate through every key in the current item dictionary -->
+                            {% for key in guest.keys() %}
+
+						    <!-- Create a <td> element with the value of that key in it -->
+						    <td> {{guest[key]}} </td> 
+                            {% endfor %}
+
+                            <!-- Create our edit/delete buttons -->
+						    <td><a href="edit_guest/{{guest.guest_id}}" class="btn btn-default">Edit</a></td>
+						    <td><a href="delete_guest/{{guest.guest_id}}" class="btn btn-default">Delete</a></td>
+
+					    </tr> 
+                        {% endfor %} 
+                {% endif %} 
+        </table>   
+
+    <p></p>
+    <input type="submit" value="Add Guest" name = "Add_Guest" onClick="newGuest()">
+
+    </div> <!-- end of browse -->
+
+    <div id="insert">
+        <form method="POST" id="addGuest">
+            <p></p>
+            <legend><strong>Add Guest</strong></legend>
+              <fieldset class="fields">
+                <label> Guest Name: </label> <input type="text" name="guest_name" required>
+                <label> Email: </label> <input type="text" name="email" required>
+                <label> Phone Number: </label> <input type="text" name="phone_num">
+          </fieldset>
+              <input class="btn" type="submit" id="addGuest" value="Add Guest">
+              <input class="btn" type="button" value="Cancel" onClick="browseGuests()">
+        </form> 
+    </div><!-- insert --> 
+    <p>&nbsp;</p>
+    
+    <div id="update">
+        <form method="POST" id="updateGuest">
+            <legend><strong>Update Guest</strong></legend>
+              <fieldset class="fields">
+              <input type="hidden" name="Guest ID" id="updateGuestID" value="1">
+                <label> ID: </label> 15
+                <label> Guest Name: </label> <input type="text" name="guest_name" value="Joe Smith" required>
+                <label> Email: </label> <input type="text" name="email" value="joesmith@gmail.com" required>
+                <label> Phone Number: </label> <input type="text" name="phone_num" value="111111">
+          </fieldset>
+              <input class="btn" type="submit" id="UpdateSaveGuest" value="Save Update Guest">
+              <input class="btn" type="button" value="Cancel" onClick="browseGuests()">
+        </form> 
+    </div><!-- update -->
+    <p>&nbsp;</p>
+
+</body>
+</html>

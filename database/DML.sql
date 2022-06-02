@@ -1,4 +1,5 @@
--- Flask/SQL interaction for Cascade Castles
+-- Flask/SQL Data Manipulation Queries for Cascade Castles
+-- CS340 Portfolio Project - Valor Nash & Kyle Sevier
 
 -- GUEST TABLE
 

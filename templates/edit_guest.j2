@@ -44,17 +44,23 @@
                     <input type="hidden" value="{{data[0].guest_id}}" class="form-control" id="guest_id" name="guest_id" required>
                     
                     <label for="guest_name">Name:</label>
-                    <input type="text" value="{{data[0].guest_name}}" class="form-control" id="guest_name" name="guest_name" pattern="[A-Za-z]{1,}" required>
+                    <input type="text" value="{{data[0].guest_name}}" class="form-control" id="guest_name" name="guest_name" pattern="^[a-zA-Z]+( [a-zA-Z]+)*$" required>
 
+
+                    {# Citation for the following function:
+                    ## Date: 6/1/2022
+                    ## Copied from /OR/ Adapted from /OR/ Based on: Copied from regex answer (how to format email type) on StackOverflow
+                    ## Source URL: https://stackoverflow.com/questions/5601647/html5-email-input-pattern-attribute
+                    #}
                     <label for="email">Email:</label>
-                    <input type="text" value="{{data[0].email}}" class="form-control" id="email" name="email" pattern="[A-Za-z0-9]{1,}" required>
+                    <input type="email" value="{{data[0].email}}" class="form-control" id="email" name="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" required>
 
                     <label for="phone_num">Phone Number:</label>
                     <input type="text" value="{{data[0].phone_num}}" class="form-control" id="phone_num" name="phone_num" pattern="[A-Za-z0-9]{1,}">
                 
                 </fieldset>
                 <input type="submit" value="Save Update Guest" name="edit_guest" class="btn btn-primary" style="margin:.5rem;">
-                <a href='/people'><input class="btn" type="button" value="cancel"></a>
+                <a href='/guests'><input class="btn" type="button" value="cancel"></a>
             </form>
 
 </html>

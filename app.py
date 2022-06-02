@@ -1,3 +1,11 @@
+'''
+CS340 Portfolio Project
+Citation for the following function: Holistic citation for CRUD operations in Flask (followed guide)
+Date: 6/1/2022
+Copied from /OR/ Adapted from /OR/ Based on: The OSU CS340 Flask Guide
+Source URL: https://github.com/osu-cs340-ecampus/flask-starter-app
+'''
+
 from flask import Flask, render_template, json, redirect
 from flask_mysqldb import MySQL
 from flask import request
@@ -6,18 +14,16 @@ import os
 app = Flask(__name__)
 
 app.config['MYSQL_HOST'] = 'classmysql.engr.oregonstate.edu'
-app.config['MYSQL_USER'] = 'cs340_sevierk'
-app.config['MYSQL_PASSWORD'] = '5662' #last 4 of onid
-app.config['MYSQL_DB'] = 'cs340_sevierk'
+app.config['MYSQL_USER'] = 'cs340_XXXXX'
+app.config['MYSQL_PASSWORD'] = 'XXXXX' #last 4 of onid
+app.config['MYSQL_DB'] = 'cs340_XXXXX'
 app.config['MYSQL_CURSORCLASS'] = "DictCursor"
-
 
 mysql = MySQL(app)
 
-
 # Routes
 
-# HOME PAGE
+# -------------- HOME PAGE ---------------------
 
 @app.route('/')
 def root():
@@ -27,9 +33,10 @@ def root():
 def home():
     return render_template("home.j2")
 
-# GUEST TABLES
 
-# GUESTS CREATE AND READ ALL 
+# -------------- GUEST TABLE ---------------------
+
+# CREATE / READ
 @app.route('/guests',  methods=["POST", "GET"])
 def guests():
     if request.method == "POST":
@@ -59,7 +66,7 @@ def guests():
         results = cursor.fetchall()
         return render_template("guests.j2", guests=results)
 
-# GUESTS DELETE
+# DELETE
 @app.route("/delete_guest/<int:guest_id>")
 def delete_guest(guest_id):
     query = "DELETE FROM guests WHERE guest_id = '%s';"
@@ -68,25 +75,23 @@ def delete_guest(guest_id):
     mysql.connection.commit()
     return redirect('/guests')
 
-# GUESTS UPDATE
+# UPDATE
 @app.route("/edit_guest/<int:guest_id>", methods=["POST", "GET"])
 def edit_guest(guest_id):
     if request.method == "GET":
-        # First, we target the guest that we want to edit
         query = "SELECT * FROM guests WHERE guest_id = '%s'" % (guest_id)
         cur = mysql.connection.cursor()
-        cur.execute(query) #(guest_id,))
+        cur.execute(query)
         data = cur.fetchall()
         return render_template("edit_guest.j2", data=data)
 
     if request.method == "POST":
-        # taking in edit guest form inputs
         guest_id = request.form["guest_id"]
         guest_name = request.form["guest_name"]
         email = request.form["email"]
         phone_num = request.form["phone_num"]
 
-        # when phone num is NULL
+        # phone number is NULL-able
         if phone_num == "":
             phone_num = None
             query = "UPDATE guests SET guest_name = %s, guests.email = %s, guests.phone_num = %s WHERE guest_id = %s;"
@@ -95,7 +100,6 @@ def edit_guest(guest_id):
             mysql.connection.commit()
             return redirect('/guests')
 
-        # all inputs are entered (may need to error check for no inputs)
         else:
             query = "UPDATE guests SET guest_name = %s, email = %s, phone_num = %s WHERE guest_id = %s;"
             cur = mysql.connection.cursor()
@@ -103,7 +107,10 @@ def edit_guest(guest_id):
             mysql.connection.commit()
             return redirect('/guests')
 
-# ATTRACTIONS CREATE AND READ ALL 
+
+# -------------- ATTRACTIONS TABLE ---------------------
+
+# CREATE / READ 
 @app.route('/attractions',  methods=["POST", "GET"])
 def attractions():
     if request.method == "POST":
@@ -124,7 +131,7 @@ def attractions():
         results = cursor.fetchall()
         return render_template("attractions.j2", attractions=results)
 
-# ATTRACTION DELTE
+# DELETE
 @app.route("/delete_attraction/<int:ride_id>")
 def delete_attraction(ride_id):
     query = "DELETE FROM attractions WHERE ride_id = '%s';"
@@ -133,12 +140,10 @@ def delete_attraction(ride_id):
     mysql.connection.commit()
     return redirect('/attractions')
 
-# ATTRACTION UPDATE
+# UPDATE
 @app.route("/edit_attraction/<int:ride_id>", methods=["POST", "GET"])
 def edit_attraction(ride_id):
-    # all fields are required. guest_id is NULL-able
     if request.method == "GET":
-        # First, we target the guest that we want to edit
         query = "SELECT * FROM attractions WHERE ride_id = '%s'" % (ride_id)
         cur = mysql.connection.cursor()
         cur.execute(query)
@@ -146,20 +151,21 @@ def edit_attraction(ride_id):
         return render_template("edit_attraction.j2", data=data)
 
     if request.method == "POST":
-        # taking in edit attraction form inputs
         ride_id = request.form["ride_id"]
         ride_name = request.form["ride_name"]
         date_created = request.form["date_created"]
         num_riders = request.form["num_riders"]
 
-        # all inputs are entered (may need to error check for no inputs)
         query = "UPDATE attractions SET date_created=(SELECT date FROM dates WHERE date=%s), ride_name = %s, num_riders = %s WHERE ride_id=%s;"
         cur = mysql.connection.cursor()
         cur.execute(query, (date_created, ride_name, num_riders, ride_id))
         mysql.connection.commit()
         return redirect('/attractions')
 
-# ORDER TABLE CREATE AND READ ALL
+
+# -------------- ORDERS TABLE ---------------------
+
+# CREATE / READ
 @app.route('/orders', methods=["POST", "GET"])
 def orders():
     if request.method == "POST":
@@ -181,12 +187,10 @@ def orders():
         results = cursor.fetchall()
         return render_template("orders.j2", orders=results)
 
-# ORDER UPDATE
+# UPDATE
 @app.route("/edit_order/<int:order_id>", methods=["POST", "GET"])
 def edit_order(order_id):
-    # all fields are required. guest_id is NULL-able
     if request.method == "GET":
-        # First, we target the guest that we want to edit
         query = "SELECT * FROM orders WHERE order_id = '%s'" % (order_id)
         cur = mysql.connection.cursor()
         cur.execute(query)
@@ -194,21 +198,18 @@ def edit_order(order_id):
         return render_template("edit_order.j2", data=data)
 
     if request.method == "POST":
-        # taking in edit guest form inputs
         guest_id = request.form["guest_id"]
         date = request.form["date"]
         ticket = request.form["ticket"]
         season_pass_holder = request.form["season_pass_holder"]
 
-        # all inputs are entered (may need to error check for no inputs)
         query = "UPDATE orders SET date=(SELECT date FROM dates WHERE date=%s), ticket=%s, season_pass_holder=%s, guest_id = (SELECT guest_id FROM guests WHERE guest_id=%s) WHERE order_id=%s;"
         cur = mysql.connection.cursor()
         cur.execute(query, (date, ticket, season_pass_holder, guest_id, order_id))
         mysql.connection.commit()
         return redirect('/orders')
 
-
-# ORDER DELETE
+# DELETE
 @app.route("/delete_order/<int:order_id>")
 def delete_order(order_id):
     query = "DELETE FROM orders WHERE order_id = '%s';"
@@ -218,7 +219,9 @@ def delete_order(order_id):
     return redirect('/orders')
 
 
-# DATE TABLE CREATE AND READ ALL
+# -------------- DATES TABLE ---------------------
+
+# CREATE / READ
 @app.route('/dates', methods=["POST", "GET"])
 def dates():
     if request.method == "POST":
@@ -240,12 +243,10 @@ def dates():
         results = cursor.fetchall()
         return render_template("dates.j2", dates=results)
 
-# # DATE UPDATE
+# UPDATE
 @app.route("/edit_date/<string:date>", methods=["POST", "GET"])
 def edit_date(date):
-    # all fields are required. guest_id is NULL-able
     if request.method == "GET":
-        # First, we target the guest that we want to edit
         query = "SELECT * FROM dates WHERE date = '%s'" % (date)
         cur = mysql.connection.cursor()
         cur.execute(query)
@@ -258,14 +259,13 @@ def edit_date(date):
         holiday = request.form["holiday"]
         weather = request.form["weather"]
 
-        # all inputs are entered (may need to error check for no inputs)
         query = "UPDATE dates SET date=%s, day_of_week = %s, holiday = %s, weather = %s WHERE date = %s;"
         cur = mysql.connection.cursor()
         cur.execute(query, (date, day_of_week, holiday, weather, date))
         mysql.connection.commit()
         return redirect('/dates')
 
-# DATE DELETE
+# DELETE
 @app.route("/delete_date/<string:date>")
 def delete_date(date):
     query = "DELETE FROM dates WHERE date = %s;"
@@ -275,16 +275,14 @@ def delete_date(date):
     return redirect('/dates')
 
 
+# -------------- GUESTS_HAS_ATTRACTIONS TABLE ---------------------
 
-
-
-
-# RIDES RIDDEN BY GUESTS CREATE AND READ
+# CREATE / READ
 @app.route('/guests_has_attractions', methods=["POST", "GET"])
 def guests_has_attractions():
     if request.method == "POST":
         ride_id = request.form["ride_id"]
-        date_created = request.form["date_created"]
+        date_created = request.form["date"]
         guest_id = request.form["guest_id"]
         
         query = "INSERT INTO guests_has_attractions (guest_id, ride_id, date) VALUES ((SELECT guest_id FROM guests WHERE guest_id=%s), (SELECT ride_id FROM attractions WHERE ride_id=%s), (SELECT date FROM dates WHERE date=%s))"
@@ -299,16 +297,19 @@ def guests_has_attractions():
     results = cursor.fetchall()
     return render_template("guests_has_attractions.j2", guests_has_attractions=results)
 
-# # RIDES RIDDEN BY GUESTS DELETE
-# @app.route("/delete_guest_has_attractions/<string:date>")
-# def delete_date(date):
-#     query = "DELETE FROM dates WHERE date = %s;"
-#     cur = mysql.connection.cursor()
-#     cur.execute(query,(date,))
-#     mysql.connection.commit()
-#     return redirect('/dates')
+# DELETE
+@app.route("/delete_guests_has_attractions/<int:guest_attraction_id>")
+def delete_guests_has_attractions(guest_attraction_id):
+    query = "DELETE FROM guests_has_attractions WHERE guest_attraction_id = %s;"
+    cur = mysql.connection.cursor()
+    cur.execute(query,(guest_attraction_id,))
+    mysql.connection.commit()
+    return redirect('/guests_has_attractions')
 
-# master table CREATE AND READ ALL 
+
+# -------------- MASTER_TABLE TABLE ---------------------
+
+# CREATE / READ
 @app.route('/master_table',  methods=["POST", "GET"])
 def master_table():
     if request.method == "POST":
@@ -337,12 +338,10 @@ def master_table():
         results = cursor.fetchall()
         return render_template("master_table.j2", master_table=results)
 
-# # master table UPDATE
+# UPDATE
 @app.route("/edit_table/<int:table_id>", methods=["POST", "GET"])
 def edit_master_table(table_id):
-    # all fields are required. guest_id is NULL-able
     if request.method == "GET":
-        # First, we target the guest that we want to edit
         query = "SELECT * FROM master_table WHERE table_id = '%s'" % (table_id)
         cur = mysql.connection.cursor()
         cur.execute(query)
@@ -355,14 +354,13 @@ def edit_master_table(table_id):
         total_guests = request.form["total_guests"]
         total_riders = request.form["total_riders"]
 
-        # all inputs are entered (may need to error check for no inputs)
         query = "UPDATE master_table SET date=(SELECT date FROM dates WHERE date=%s), total_guests = %s, total_riders = %s WHERE table_id = %s;"
         cur = mysql.connection.cursor()
         cur.execute(query, (date, total_guests, total_riders, table_id))
         mysql.connection.commit()
         return redirect('/master_table')
 
-# master table DELETE
+# DELETE
 @app.route("/delete_table/<int:table_id>")
 def delete_master_table(table_id):
     query = "DELETE FROM master_table WHERE table_id = %s;"
@@ -371,7 +369,7 @@ def delete_master_table(table_id):
     mysql.connection.commit()
     return redirect('/master_table')
 
-# Listener
+# LISTENER
 if __name__ == "__main__":
     port = int(os.environ.get('PORT', 4785)) 
     app.run(port=port, debug=True)

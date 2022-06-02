@@ -90,8 +90,7 @@
                             {% endfor %}
 
                             <!-- Create our edit/delete buttons -->
-						    <td><a href="edit_ride/{{attr.guest_id}}" class="btn btn-default">Edit</a></td>
-						    <td><a href="delete_ride/{{attr.guest_id}}" class="btn btn-default">Delete</a></td>
+						    <td><a href="delete_guests_has_attractions/{{attr.guest_attraction_id}}" class="btn btn-default">Delete</a></td>
 					    </tr> 
                         {% endfor %} 
                 {% endif %} 
@@ -107,43 +106,12 @@
             <legend><strong>Add Guest/Ride Interaction</strong></legend>
               <fieldset class="fields">
                 <label> Ride ID </label> <input type="number" name="ride_id" required>
-                <label> Date </label> <input type="date" name="date_created" required>
+                <label> Date </label> <input type="date" name="date" required>
                 <label> Guest ID </label> <input type="number" name="guest_id" required>
           </fieldset>
               <input class="btn" type="submit" id="addRide" value="Add Ride">
               <input class="btn" type="button" value="Cancel" onClick="browseAttrGuest()">
         </form> 
     </div><!-- insert -->
-
-    <p>&nbsp;</p>
-    <div id="update">
-        <form method="POST" id="updateAttrGuest">
-            <legend><strong>Update Guest/Ride Interaction</strong></legend>
-              <fieldset class="fields">
-              <input type="hidden" name="Ride ID" id="updaterideID" value="1">
-                <label> Ride ID: </label> <input type="number" name="ride_id" value="1" required>
-                <label> Date: </label> <input type="date" name="ride_name" value="2022-04-23" required>
-                <label> Guest ID: </label> <input type="number" name="guest_id" value="15" required>
-          </fieldset>
-              <input class="btn" type="submit" id="UpdateSaveRide" value="Save Update Intersection">
-              <input class="btn" type="button" value="Cancel" onClick="browseAttrGuest()">
-        </form> 
-    </div><!-- update -->
-    <p>&nbsp;</p>
-    <div id="delete" style="display: block">
-      <form method="POST" id="deleteRide">
-          <legend><strong>Delete Guest/Ride Interaction</strong></legend>
-              <fieldset class="fields">
-              <p>Are you sure you wish to delete the following?</p>
-              <input type="hidden" name="guest_ride" id="deleteIntersection" value="1">
-              <label><strong>Ride ID:</strong></label> 1
-                <label> <strong>Date:</strong> </label> 2022-04-23
-                <label> <strong>Guest ID:</strong> </label> 15
-                
-        </fieldset>
-        <input class="btn" type="submit" id="DeleteRide" value="Delete Intersection">
-              <input class="btn" type="button" value="Cancel" onClick="browseAttrGuest()">
-      </form> 
-    </div>
 </body>
 </html>

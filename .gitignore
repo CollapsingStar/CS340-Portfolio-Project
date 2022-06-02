@@ -2,7 +2,6 @@
 /include
 /lib
 /lib64
-/static
 /venv
 /bin
 pyvenv.cfg

@@ -14,9 +14,9 @@ import os
 app = Flask(__name__)
 
 app.config['MYSQL_HOST'] = 'classmysql.engr.oregonstate.edu'
-app.config['MYSQL_USER'] = 'cs340_sevierk'
-app.config['MYSQL_PASSWORD'] = '5662' #last 4 of onid
-app.config['MYSQL_DB'] = 'cs340_sevierk'
+app.config['MYSQL_USER'] = 'cs340_XXXX'
+app.config['MYSQL_PASSWORD'] = 'XXX' #last 4 of onid
+app.config['MYSQL_DB'] = 'cs340_XXXX'
 app.config['MYSQL_CURSORCLASS'] = "DictCursor"
 
 mysql = MySQL(app)

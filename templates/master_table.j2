@@ -3,7 +3,7 @@
 CS340 Portfolio Project
 Citation for the following function: Holistic citation for CRUD operations in Flask (followed guide)
 Date: 6/1/2022
-Copied from /OR/ Adapted from /OR/ Based on: The OSU CS340 Flask Guide
+Copied from /OR/ Adapted from /OR/ Based on: Copied from The OSU CS340 Flask Guide
 Source URL: https://github.com/osu-cs340-ecampus/flask-starter-app
 #}
 
@@ -57,8 +57,8 @@ Source URL: https://github.com/osu-cs340-ecampus/flask-starter-app
 </head>
 
 <body onload="browseMasters()">
-    <h1>Summary of Information</h1>
-    <h2>View the master records for the park.</h2>
+    <h1>Master Table (Daily Data Collection)</h1>
+    <h2>View the master records for the park categorized and accumulated by day.</h2>
     [
     <a href="home">Home Page</a> |
     <a href="guests">Guests</a> |
@@ -71,7 +71,7 @@ Source URL: https://github.com/osu-cs340-ecampus/flask-starter-app
  
     <div id="browse"
     <p> </p>
-    <p>Master Table</p>
+    <p>'master_table' Table:</p>
 
 <table border="1" cellpadding="5">
             <!-- Access data tuple passed from app.py --> 
@@ -100,7 +100,7 @@ Source URL: https://github.com/osu-cs340-ecampus/flask-starter-app
                             {% endfor %}
 
                             <!-- Create our edit/delete buttons -->
-						    <td><a href="edit_table/{{table.table_id}}" class="btn btn-default">Edit</a></td>
+						    <td><a href="edit_master_table/{{table.table_id}}" class="btn btn-default">Edit</a></td>
 						    <td><a href="delete_table/{{table.table_id}}" class="btn btn-default">Delete</a></td>
 
 					    </tr> 

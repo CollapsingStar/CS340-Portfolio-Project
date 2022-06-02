@@ -14,9 +14,9 @@ import os
 app = Flask(__name__)
 
 app.config['MYSQL_HOST'] = 'classmysql.engr.oregonstate.edu'
-app.config['MYSQL_USER'] = 'cs340_XXXXX'
-app.config['MYSQL_PASSWORD'] = 'XXXXX' #last 4 of onid
-app.config['MYSQL_DB'] = 'cs340_XXXXX'
+app.config['MYSQL_USER'] = 'cs340_sevierk'
+app.config['MYSQL_PASSWORD'] = '5662' #last 4 of onid
+app.config['MYSQL_DB'] = 'cs340_sevierk'
 app.config['MYSQL_CURSORCLASS'] = "DictCursor"
 
 mysql = MySQL(app)
@@ -339,14 +339,14 @@ def master_table():
         return render_template("master_table.j2", master_table=results)
 
 # UPDATE
-@app.route("/edit_table/<int:table_id>", methods=["POST", "GET"])
+@app.route("/edit_master_table/<int:table_id>", methods=["POST", "GET"])
 def edit_master_table(table_id):
     if request.method == "GET":
         query = "SELECT * FROM master_table WHERE table_id = '%s'" % (table_id)
         cur = mysql.connection.cursor()
         cur.execute(query)
         data = cur.fetchall()
-        return render_template("edit_table.j2", data=data)
+        return render_template("edit_master_table.j2", data=data)
 
     if request.method == "POST":
         table_id = request.form["table_id"]

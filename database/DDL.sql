@@ -8,14 +8,13 @@ SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
 
-
 -- -----------------------------------------------------
 -- Table `dates`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `dates` ;
 
 CREATE TABLE IF NOT EXISTS `dates` (
-  `date` DATETIME NOT NULL,
+  `date` DATE NOT NULL,
   `day_of_week` VARCHAR(45) NOT NULL,
   `holiday` TINYINT NOT NULL,
   `weather` VARCHAR(45) NOT NULL,
@@ -49,7 +48,7 @@ CREATE TABLE IF NOT EXISTS `orders` (
   `order_id` INT NOT NULL AUTO_INCREMENT,
   `season_pass_holder` TINYINT NOT NULL,
   `guest_id` INT NULL DEFAULT NULL,
-  `date` DATETIME NOT NULL,
+  `date` DATE NOT NULL,
   `ticket` INT NOT NULL,
   INDEX `fk_orders_date1_idx` (`date` ASC) VISIBLE,
   UNIQUE INDEX `order_id_UNIQUE` (`order_id` ASC) VISIBLE,
@@ -76,7 +75,7 @@ DROP TABLE IF EXISTS `attractions` ;
 CREATE TABLE IF NOT EXISTS `attractions` (
   `ride_id` INT NOT NULL AUTO_INCREMENT,
   `num_riders` INT NOT NULL,
-  `date_created` DATETIME NOT NULL,
+  `date_created` DATE NOT NULL,
   `ride_name` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`ride_id`),
   INDEX `fk_attractions_date1_idx` (`date_created` ASC) VISIBLE,
@@ -98,7 +97,7 @@ CREATE TABLE IF NOT EXISTS `master_table` (
   `table_id` INT NOT NULL AUTO_INCREMENT,
   `total_guests` INT NOT NULL,
   `total_riders` INT NULL DEFAULT NULL,
-  `date` DATETIME NOT NULL,
+  `date` DATE NOT NULL,
   INDEX `fk_master_table_date1_idx` (`date` ASC) VISIBLE,
   PRIMARY KEY (`table_id`),
   UNIQUE INDEX `date_UNIQUE` (`date` ASC) VISIBLE,
@@ -119,7 +118,7 @@ CREATE TABLE IF NOT EXISTS `guests_has_attractions` (
   `guest_attraction_id` INT NOT NULL AUTO_INCREMENT,
   `guest_id` INT NOT NULL,
   `ride_id` INT NOT NULL,
-  `date` DATETIME NOT NULL,
+  `date` DATE NOT NULL,
   INDEX `fk_guests_has_attractions_attractions1_idx` (`ride_id` ASC) VISIBLE,
   INDEX `fk_guests_has_attractions_guests1_idx` (`guest_id` ASC) VISIBLE,
   INDEX `fk_date_idx` (`date` ASC) VISIBLE,
@@ -147,9 +146,11 @@ ENGINE = InnoDB;
 -- Data for table `dates`
 -- -----------------------------------------------------
 START TRANSACTION;
-INSERT INTO `dates` (`date`, `day_of_week`, `holiday`, `weather`) VALUES ('2022-06-22 00:00:00', 'Sunday', 0, 'Sunny');
-INSERT INTO `dates` (`date`, `day_of_week`, `holiday`, `weather`) VALUES ('2022-06-23 00:00:00', 'Monday', 1, 'Rainy');
-INSERT INTO `dates` (`date`, `day_of_week`, `holiday`, `weather`) VALUES ('2022-06-24 00:00:00', 'Tuesday', 1, 'Cloudy');
+INSERT INTO `dates` (`date`, `day_of_week`, `holiday`, `weather`) VALUES ('2022-06-22', 'Sunday', 0, 'Sunny');
+INSERT INTO `dates` (`date`, `day_of_week`, `holiday`, `weather`) VALUES ('2022-06-23', 'Monday', 1, 'Rainy');
+INSERT INTO `dates` (`date`, `day_of_week`, `holiday`, `weather`) VALUES ('2022-06-24', 'Tuesday', 1, 'Cloudy');
+INSERT INTO `dates` (`date`, `day_of_week`, `holiday`, `weather`) VALUES ('2022-06-25', 'Wednesday', 1, 'Cloudy');
+INSERT INTO `dates` (`date`, `day_of_week`, `holiday`, `weather`) VALUES ('2022-06-26', 'Thursday', 0, 'Overcast');
 
 COMMIT;
 
@@ -162,6 +163,7 @@ INSERT INTO `guests` (`guest_id`, `guest_name`, `email`, `phone_num`) VALUES (1,
 INSERT INTO `guests` (`guest_id`, `guest_name`, `email`, `phone_num`) VALUES (2, 'Anakin Skywalker', 'jedicouncil@email.com', '0001233121');
 INSERT INTO `guests` (`guest_id`, `guest_name`, `email`, `phone_num`) VALUES (3, 'Eren Jeager', 'eren@email.com', '3123412331');
 INSERT INTO `guests` (`guest_id`, `guest_name`, `email`, `phone_num`) VALUES (4, 'Keanu Reeves', 'keanu@email.com', '3115419008');
+INSERT INTO `guests` (`guest_id`, `guest_name`, `email`, `phone_num`) VALUES (5, 'Meister Proper', 'mrclean@email.com', '3291029182');
 
 COMMIT;
 
@@ -170,10 +172,11 @@ COMMIT;
 -- Data for table `orders`
 -- -----------------------------------------------------
 START TRANSACTION;
-INSERT INTO `orders` (`order_id`, `season_pass_holder`, `guest_id`, `date`, `ticket`) VALUES (1, 0, 1, '2022-06-22 00:00:00', 1);
-INSERT INTO `orders` (`order_id`, `season_pass_holder`, `guest_id`, `date`, `ticket`) VALUES (2, 1, 2, '2022-06-23 00:00:00', 1);
-INSERT INTO `orders` (`order_id`, `season_pass_holder`, `guest_id`, `date`, `ticket`) VALUES (3, 0, 2, '2022-06-23 00:00:00', 0);
-INSERT INTO `orders` (`order_id`, `season_pass_holder`, `guest_id`, `date`, `ticket`) VALUES (4, 1, 1, '2022-06-24 00:00:00', 1);
+INSERT INTO `orders` (`order_id`, `season_pass_holder`, `guest_id`, `date`, `ticket`) VALUES (1, 0, 1, '2022-06-22', 1);
+INSERT INTO `orders` (`order_id`, `season_pass_holder`, `guest_id`, `date`, `ticket`) VALUES (2, 1, 2, '2022-06-23', 1);
+INSERT INTO `orders` (`order_id`, `season_pass_holder`, `guest_id`, `date`, `ticket`) VALUES (3, 0, 2, '2022-06-23', 0);
+INSERT INTO `orders` (`order_id`, `season_pass_holder`, `guest_id`, `date`, `ticket`) VALUES (4, 1, 1, '2022-06-24', 1);
+INSERT INTO `orders` (`order_id`, `season_pass_holder`, `guest_id`, `date`, `ticket`) VALUES (5, 0, 4, '2022-06-26', 1);
 
 COMMIT;
 
@@ -182,9 +185,11 @@ COMMIT;
 -- Data for table `attractions`
 -- -----------------------------------------------------
 START TRANSACTION;
-INSERT INTO `attractions` (`ride_id`, `num_riders`, `date_created`, `ride_name`) VALUES (1, 23, '2022-06-22 00:00:00', 'Medusa');
-INSERT INTO `attractions` (`ride_id`, `num_riders`, `date_created`, `ride_name`) VALUES (2, 11, '2022-06-23 00:00:00', 'Whirler');
-INSERT INTO `attractions` (`ride_id`, `num_riders`, `date_created`, `ride_name`) VALUES (3, 2, '2022-06-23 00:00:00', 'Thor\'s Hammer');
+INSERT INTO `attractions` (`ride_id`, `num_riders`, `date_created`, `ride_name`) VALUES (1, 23, '2022-06-22', 'Medusa');
+INSERT INTO `attractions` (`ride_id`, `num_riders`, `date_created`, `ride_name`) VALUES (2, 11, '2022-06-23', 'Whirler');
+INSERT INTO `attractions` (`ride_id`, `num_riders`, `date_created`, `ride_name`) VALUES (3, 2, '2022-06-23', 'Thor\'s Hammer');
+INSERT INTO `attractions` (`ride_id`, `num_riders`, `date_created`, `ride_name`) VALUES (4, 130, '2022-06-24', 'Gravitron');
+INSERT INTO `attractions` (`ride_id`, `num_riders`, `date_created`, `ride_name`) VALUES (5, 99, '2022-06-25', 'Razor\'s Edge');
 
 COMMIT;
 
@@ -193,9 +198,11 @@ COMMIT;
 -- Data for table `master_table`
 -- -----------------------------------------------------
 START TRANSACTION;
-INSERT INTO `master_table` (`table_id`, `total_guests`, `total_riders`, `date`) VALUES (1, 122, 50, '2022-06-22 00:00:00');
-INSERT INTO `master_table` (`table_id`, `total_guests`, `total_riders`, `date`) VALUES (2, 150, 89, '2022-06-23 00:00:00');
-INSERT INTO `master_table` (`table_id`, `total_guests`, `total_riders`, `date`) VALUES (3, 233, 105, '2022-06-24 00:00:00');
+INSERT INTO `master_table` (`table_id`, `total_guests`, `total_riders`, `date`) VALUES (1, 122, 50, '2022-06-22');
+INSERT INTO `master_table` (`table_id`, `total_guests`, `total_riders`, `date`) VALUES (2, 150, 89, '2022-06-23');
+INSERT INTO `master_table` (`table_id`, `total_guests`, `total_riders`, `date`) VALUES (3, 233, 105, '2022-06-24');
+INSERT INTO `master_table` (`table_id`, `total_guests`, `total_riders`, `date`) VALUES (4, 412, 299, '2022-06-25');
+INSERT INTO `master_table` (`table_id`, `total_guests`, `total_riders`, `date`) VALUES (5, 413, 275, '2022-06-26');
 
 COMMIT;
 
@@ -204,9 +211,11 @@ COMMIT;
 -- Data for table `guests_has_attractions`
 -- -----------------------------------------------------
 START TRANSACTION;
-INSERT INTO `guests_has_attractions` (`guest_attraction_id`, `guest_id`, `ride_id`, `date`) VALUES (1, 1, 1, '2022-06-22 00:00:00');
-INSERT INTO `guests_has_attractions` (`guest_attraction_id`, `guest_id`, `ride_id`, `date`) VALUES (2, 2, 2, '2022-06-23 00:00:00');
-INSERT INTO `guests_has_attractions` (`guest_attraction_id`, `guest_id`, `ride_id`, `date`) VALUES (3, 2, 3, '2022-06-24 00:00:00');
+INSERT INTO `guests_has_attractions` (`guest_attraction_id`, `guest_id`, `ride_id`, `date`) VALUES (1, 1, 1, '2022-06-22');
+INSERT INTO `guests_has_attractions` (`guest_attraction_id`, `guest_id`, `ride_id`, `date`) VALUES (2, 2, 2, '2022-06-23');
+INSERT INTO `guests_has_attractions` (`guest_attraction_id`, `guest_id`, `ride_id`, `date`) VALUES (3, 2, 3, '2022-06-23');
+INSERT INTO `guests_has_attractions` (`guest_attraction_id`, `guest_id`, `ride_id`, `date`) VALUES (4, 4, 3, '2022-06-24');
+INSERT INTO `guests_has_attractions` (`guest_attraction_id`, `guest_id`, `ride_id`, `date`) VALUES (5, 1, 4, '2022-06-26');
 
 COMMIT;
 

@@ -3,7 +3,7 @@
 CS340 Portfolio Project
 Citation for the following function: Holistic citation for CRUD operations in Flask (followed guide)
 Date: 6/1/2022
-Copied from /OR/ Adapted from /OR/ Based on: The OSU CS340 Flask Guide
+Copied from /OR/ Adapted from /OR/ Based on: Copied from The OSU CS340 Flask Guide
 Source URL: https://github.com/osu-cs340-ecampus/flask-starter-app
 #}
 
@@ -46,7 +46,7 @@ Source URL: https://github.com/osu-cs340-ecampus/flask-starter-app
 
         <div id="update">
             <!-- form to edit data in master_table-->
-            <form id="updateOrder" action="/edit_table/{{data[0].table_id}}" method="post">
+            <form id="updateMasterTable" action="/edit_master_table/{{data[0].table_id}}" method="post">
                 <legend><strong>Edit Master Table</strong></legend>
                 <fieldset>
                     <input type="hidden" value="{{data[0].table_id}}" class="form-control" id="table_id" name="table_id" required>
@@ -61,7 +61,7 @@ Source URL: https://github.com/osu-cs340-ecampus/flask-starter-app
                     <input type="text" value="{{data[0].date}}" class="form-control" id="date" name="date">
 
                 </fieldset>
-                <input type="submit" value="Save Master Table" name="edit_table" class="btn btn-primary" style="margin:.5rem;">
+                <input type="submit" value="Save Master Table" name="edit_master_table" class="btn btn-primary" style="margin:.5rem;">
                 <a href='/master_table'><input class="btn" type="button" value="cancel"></a>
             </form>
 </html>

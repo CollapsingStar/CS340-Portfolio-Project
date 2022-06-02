@@ -1,5 +1,13 @@
-<html>
+{# Allows editing on the Attraction table #}
+{#
+CS340 Portfolio Project
+Citation for the following function: Holistic citation for CRUD operations in Flask (followed guide)
+Date: 6/1/2022
+Copied from /OR/ Adapted from /OR/ Based on: The OSU CS340 Flask Guide
+Source URL: https://github.com/osu-cs340-ecampus/flask-starter-app
+#}
 
+<html>
 <head>
 	<title>Edit Attraction</title>
     <link href="style.css" rel="stylesheet" type="text/css" />
@@ -37,9 +45,9 @@
         </table>   
 
         <div id="update">
-            <!-- form to edit data in bsg_people-->
+            <!-- form to edit data in attractions-->
             <form id="updateAttractions" action="/edit_attraction/{{data[0].ride_id}}" method="post">
-                <legend><strong>Edit Order</strong></legend>
+                <legend><strong>Edit Attraction</strong></legend>
                 <fieldset>
                     <input type="hidden" value="{{data[0].ride_id}}" class="form-control" id="ride_id" name="ride_id" required>
                     
@@ -50,11 +58,8 @@
                     <input type="text" value="{{data[0].ride_name}}" class="form-control" id="ride_name" name="ride_name" required>
 
                     <label> Date: </label> <input type="date" name="date_created" required>
-                
-
                 </fieldset>
                 <input type="submit" value="Save Attraction" name="edit_attraction" class="btn btn-primary" style="margin:.5rem;">
                 <a href='/attractions'><input class="btn" type="button" value="cancel"></a>
             </form>
-
 </html>

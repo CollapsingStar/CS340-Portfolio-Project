@@ -1,5 +1,13 @@
-<html>
+{# Allows editing on the master_table table #}
+{#
+CS340 Portfolio Project
+Citation for the following function: Holistic citation for CRUD operations in Flask (followed guide)
+Date: 6/1/2022
+Copied from /OR/ Adapted from /OR/ Based on: The OSU CS340 Flask Guide
+Source URL: https://github.com/osu-cs340-ecampus/flask-starter-app
+#}
 
+<html>
 <head>
 	<title>Edit Master Table</title>
     <link href="style.css" rel="stylesheet" type="text/css" />
@@ -37,7 +45,7 @@
         </table>   
 
         <div id="update">
-            <!-- form to edit data in bsg_people-->
+            <!-- form to edit data in master_table-->
             <form id="updateOrder" action="/edit_table/{{data[0].table_id}}" method="post">
                 <legend><strong>Edit Master Table</strong></legend>
                 <fieldset>
@@ -56,5 +64,4 @@
                 <input type="submit" value="Save Master Table" name="edit_table" class="btn btn-primary" style="margin:.5rem;">
                 <a href='/master_table'><input class="btn" type="button" value="cancel"></a>
             </form>
-
 </html>

@@ -16,7 +16,6 @@ WHERE guest_id = :guest_id_input;
 -- delete a guest
 DELETE FROM guests WHERE guest_id = :guest_id_input;
 
-
 --------------------------------------------------------------------------
 
 -- ORDERS TABLE
@@ -26,7 +25,6 @@ SELECT * FROM orders;
 
 -- insert an order
 INSERT INTO `orders` (`season_pass_holder`, `guest_id`, `date`, `ticket`)
--- order ID is A.I. and thus excluded here
 VALUES (FALSE, 
         (SELECT guest_id FROM guests WHERE guest_id=:guest_id_input), 
         (SELECT date FROM dates WHERE date=:date_input), 
@@ -49,12 +47,12 @@ SELECT * FROM attractions;
 -- insert an attraction
 INSERT INTO `attractions` (`ride_id`, `num_riders`, `date_created`, `ride_name`)
 VALUES (:ride_id_input(AI), 
-		:num_riders_input, 
-		(SELECT date FROM dates WHERE date=:date_input), 
+        :num_riders_input, 
+        (SELECT date FROM dates WHERE date=:date_input), 
         :ride_name_input);
 
 -- edit an attraction
-UPDATE attractions SET ride_name = :ride_name_input, date_created = :date_created_input, num_riders = :num_riders_input
+UPDATE attractions SET ride_name = :ride_name_input, date_created = (SELECT date FROM dates WHERE date=:date_created_input), num_riders = :num_riders_input
 WHERE ride_id = :ride_id_input;
 
 -- delete an attraction
@@ -93,13 +91,8 @@ VALUES ((SELECT guest_id FROM guests where guest_id = :guest_id_input),
         (SELECT ride_id FROM attractions WHERE ride_id = :ride_id_input), 
         (SELECT date FROM dates WHERE date=:date_input));
 
--- edit guest_has_attractions
-UPDATE guests_has_attractions SET times_ridden = :times_ridden_input, ride_id = :ride_id_input,
-date = date_input, guest_id = :guest_id_input
-WHERE guest_id = :guest_id_input AND date = :date_input AND ride_id = :ride_id_input;
-
 -- delete guest_has_attractions
-DELETE FROM guests_has_attractions WHERE guest_id = :guest_id_input AND date = :date_input AND ride_id = :ride_id_input;
+DELETE FROM guests_has_attractions WHERE guest_attraction_id = :guest_attraction_id_input;
 
 --------------------------------------------------------------------------
 
@@ -113,7 +106,7 @@ INSERT INTO master_table (total_guests, total_riders, date)
 VALUES (:total_guests, :total_riders, (SELECT date FROM dates WHERE date=:date_input));
 
 -- update master table record
-UPDATE master_table SET total_guests = :total_guests_input, total_riders = :total_riders, date = :date_input
+UPDATE master_table SET total_guests = :total_guests_input, total_riders = :total_riders, date = (SELECT date FROM dates WHERE date=:date_input)
 WHERE date = :date_input;
 
 -- delete master table record

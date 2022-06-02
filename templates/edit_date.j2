@@ -1,5 +1,13 @@
-<html>
+{# Allows editing on the Dates table #}
+{#
+CS340 Portfolio Project
+Citation for the following function: Holistic citation for CRUD operations in Flask (followed guide)
+Date: 6/1/2022
+Copied from /OR/ Adapted from /OR/ Based on: The OSU CS340 Flask Guide
+Source URL: https://github.com/osu-cs340-ecampus/flask-starter-app
+#}
 
+<html>
 <head>
 	<title>Edit Date</title>
     <link href="style.css" rel="stylesheet" type="text/css" />
@@ -37,7 +45,7 @@
         </table>   
 
         <div id="update">
-            <!-- form to edit data in bsg_people-->
+            <!-- form to edit data in dates-->
             <form id="updateDate" action="/edit_date/{{data[0].date}}" method="post">
                 <legend><strong>Edit Date</strong></legend>
                 <fieldset>
@@ -54,7 +62,7 @@
 
                 </fieldset>
                 <input type="submit" value="Save Date" name="edit_date" class="btn btn-primary" style="margin:.5rem;">
-                <a href='/attractions'><input class="btn" type="button" value="cancel"></a>
+                <a href='/dates'><input class="btn" type="button" value="cancel"></a>
             </form>
 
 </html>

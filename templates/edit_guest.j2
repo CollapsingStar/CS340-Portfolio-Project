@@ -1,5 +1,13 @@
-<html>
+{# Allows editing on the Guests table #}
+{#
+CS340 Portfolio Project
+Citation for the following function: Holistic citation for CRUD operations in Flask (followed guide)
+Date: 6/1/2022
+Copied from /OR/ Adapted from /OR/ Based on: The OSU CS340 Flask Guide
+Source URL: https://github.com/osu-cs340-ecampus/flask-starter-app
+#}
 
+<html>
 <head>
 	<title>Edit Guest</title>
     <link href="style.css" rel="stylesheet" type="text/css" />
@@ -37,7 +45,7 @@
         </table>   
 
         <div id="update">
-            <!-- form to edit data in bsg_people-->
+            <!-- form to edit data in guests-->
             <form id="updateGuest" action="/edit_guest/{{data[0].guest_id}}" method="post">
                 <legend><strong>Edit Guest</strong></legend>
                 <fieldset>

@@ -45,9 +45,9 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `orders` ;
 
 CREATE TABLE IF NOT EXISTS `orders` (
-  `order_id` INT NOT NULL AUTO_INCREMENT,
+  `order_id` INT NOT NULL,
   `season_pass_holder` TINYINT NOT NULL,
-  `guest_id` INT NULL DEFAULT NULL,
+  `guest_id` INT NULL,
   `date` DATE NOT NULL,
   `ticket` INT NOT NULL,
   INDEX `fk_orders_date1_idx` (`date` ASC) VISIBLE,

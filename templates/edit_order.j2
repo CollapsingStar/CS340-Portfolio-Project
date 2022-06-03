@@ -52,7 +52,7 @@ Source URL: https://github.com/osu-cs340-ecampus/flask-starter-app
                     <input type="hidden" value="{{data[0].order_id}}" class="form-control" id="order_id" name="order_id" required>
                     
                     <label for="guest_id">Guest_ID:</label>
-                    <input type="text" value="{{data[0].guest_id}}" class="form-control" id="guest_id" name="guest_id" pattern="{1-9}" required>
+                    <input type="text" value="{{data[0].guest_id}}" class="form-control" id="guest_id" name="guest_id" pattern="{1-9}">
 
                     <label> Season Pass Holder: </label> <select name="season_pass_holder" value="1" required>
                     <option value="1">Yes</option>

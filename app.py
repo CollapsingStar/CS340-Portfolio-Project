@@ -15,8 +15,8 @@ app = Flask(__name__)
 
 app.config['MYSQL_HOST'] = 'classmysql.engr.oregonstate.edu'
 app.config['MYSQL_USER'] = 'cs340_XXXX'
-app.config['MYSQL_PASSWORD'] = 'XXX' #last 4 of onid
-app.config['MYSQL_DB'] = 'cs340_XXXX'
+app.config['MYSQL_PASSWORD'] = 'XXXX' #last 4 of onid
+app.config['MYSQL_DB'] = 'cs340_XXXXX'
 app.config['MYSQL_CURSORCLASS'] = "DictCursor"
 
 mysql = MySQL(app)
@@ -173,6 +173,14 @@ def orders():
         date = request.form["date_created"]
         ticket = request.form["ticket"]
         season_pass = request.form["season_pass"]
+
+        # guest_id is NULL-able as FK in the orders table
+        if guest_id == "":
+            query = "INSERT INTO orders (date, ticket, season_pass_holder) VALUES ((SELECT date FROM dates WHERE date=%s), ticket=%s, season_pass_holder=%s)"
+            cur = mysql.connection.cursor()
+            cur.execute(query, (date, ticket, season_pass))
+            mysql.connection.commit()
+            return redirect('/orders')
 
         query = "INSERT INTO orders (guest_id, date, ticket, season_pass_holder) VALUES ((SELECT guest_id FROM guests WHERE guest_id=%s), (SELECT date FROM dates WHERE date=%s), ticket=%s, season_pass_holder=%s)"
         cur = mysql.connection.cursor()

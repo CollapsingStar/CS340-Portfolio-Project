@@ -71,7 +71,7 @@ Source URL: https://github.com/osu-cs340-ecampus/flask-starter-app
  
     <div id="browse"
     <p> </p>
-    <p>'master_table' Table:</p>
+    <p><strong>Master Table</strong></p>
 
 <table border="1" cellpadding="5">
             <!-- Access data tuple passed from app.py --> 
@@ -116,7 +116,13 @@ Source URL: https://github.com/osu-cs340-ecampus/flask-starter-app
             <p></p>
             <legend><strong>Add to Master</strong></legend>
               <fieldset class="fields">
-                <label> Date: </label> <input type="text" name="date" required>
+                <label> Date: </label> 
+                <select required name="date" id="date">
+                    <option disable selected value=></option>
+                    {% for date in dates %}
+                        <option value="{{ date['date'] }}">{{ date['date'] }}</option>
+                    {% endfor %}
+                </select>
                 <label> Total Guests: </label> <input type="number" name="total_guests" required>
                 <label> Total Riders: </label> <input type="number" name="total_riders">
           </fieldset>

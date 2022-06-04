@@ -14,6 +14,19 @@ Source URL: https://github.com/osu-cs340-ecampus/flask-starter-app
 </head>
 
 <body>
+    <h1>Dates</h1>
+    <h2>Create, Read, Update, and Delete the dates stored with the park.</h2>
+    [
+    <a href="home">Home Page</a> |
+    <a href="guests">Guests</a> |
+    <a href="orders">Orders</a> |
+    <a href="attractions">Attractions</a> |
+    <a href="dates">Dates</a> |
+    <a href="guests_has_attractions">Rides Ridden by Guests</a> |
+    <a href="master_table">Master Table</a>
+    ]
+
+    <p> </p>
     <div>
         <table border="1" cellpadding="5">
             <!-- Access data tuple passed from app.py --> 
@@ -51,18 +64,96 @@ Source URL: https://github.com/osu-cs340-ecampus/flask-starter-app
                 <fieldset>
                     <input type="hidden" value="{{data[0].date}}" class="form-control" id="date" name="date" required>
                     
-                    <label for="date">Day of Week</label>
-                    <input type="text" value="{{data[0].day_of_week}}" class="form-control" id="day_of_week" name="day_of_week" required>
+                    <label> Weather: </label> <input type="weather" value="{{data[0].weather}}" name="weather" required>
 
-                    <label for="date">Holiday:</label>
-                    <input type="text" value="{{data[0].holiday}}" class="form-control" id="holiday" name="holiday" required>
+                    <label> Day of Week: </label>
+                    <select required name="day_of_week" id="day_of_week>
+                    {% if data[0].day_of_week == "Monday" %}
+                        <option value="blank">Blank</option>
+                        <option value="Monday" selected>Monday</option>
+                        <option value="Tuesday">Tuesday</option>
+                        <option value="Wednesday">Wednesday</option>
+                        <option value="Thursday">Thursday</option>
+                        <option value="Friday">Friday</option>
+                        <option value="Saturday">Saturday</option>
+                        <option value="Sunday">Sunday</option>
 
-                    <label> Weather: </label> <input type="weather" name="weather" required>
-                
+                    {% elif data[0].day_of_week == "Tuesday" %}
+                        <option value="blank">Blank</option>
+                        <option value="Monday">Monday</option>
+                        <option value="Tuesday" selected>Tuesday</option>
+                        <option value="Wednesday">Wednesday</option>
+                        <option value="Thursday">Thursday</option>
+                        <option value="Friday">Friday</option>
+                        <option value="Saturday">Saturday</option>
+                        <option value="Sunday">Sunday</option>
+
+                    {% elif data[0].day_of_week == "Wednesday" %}
+                        <option value="blank">Blank</option>
+                        <option value="Monday">Monday</option>
+                        <option value="Tuesday">Tuesday</option>
+                        <option value="Wednesday" selected>Wednesday</option>
+                        <option value="Thursday">Thursday</option>
+                        <option value="Friday">Friday</option>
+                        <option value="Saturday">Saturday</option>
+                        <option value="Sunday">Sunday</option>
+
+                    {% elif data[0].day_of_week == "Thursday" %}
+                        <option value="blank">Blank</option>
+                        <option value="Monday">Monday</option>
+                        <option value="Tuesday">Tuesday</option>
+                        <option value="Wednesday">Wednesday</option>
+                        <option value="Thursday" selected>Thursday</option>
+                        <option value="Friday">Friday</option>
+                        <option value="Saturday">Saturday</option>
+                        <option value="Sunday">Sunday</option>
+
+                    {% elif data[0].day_of_week == "Friday" %}
+                        <option value="blank">Blank</option>
+                        <option value="Monday">Monday</option>
+                        <option value="Tuesday">Tuesday</option>
+                        <option value="Wednesday">Wednesday</option>
+                        <option value="Thursday">Thursday</option>
+                        <option value="Friday" selected>Friday</option>
+                        <option value="Saturday">Saturday</option>
+                        <option value="Sunday">Sunday</option>
+                        
+                    {% elif data[0].day_of_week == "Saturday" %}
+                        <option value="blank">Blank</option>
+                        <option value="Monday">Monday</option>
+                        <option value="Tuesday">Tuesday</option>
+                        <option value="Wednesday">Wednesday</option>
+                        <option value="Thursday">Thursday</option>
+                        <option value="Friday">Friday</option>
+                        <option value="Saturday" selected>Saturday</option>
+                        <option value="Sunday">Sunday</option>
+                    
+                    {% else %}
+                        <option value="blank">Blank</option>
+                        <option value="Monday">Monday</option>
+                        <option value="Tuesday" selected>Tuesday</option>
+                        <option value="Wednesday">Wednesday</option>
+                        <option value="Thursday">Thursday</option>
+                        <option value="Friday">Friday</option>
+                        <option value="Saturday">Saturday</option>
+                        <option value="Sunday" selected>Sunday</option>
+                    {% endif %}
+                    </select>
+
+                    <label> Holiday? </label> 
+                    <select name="holiday" required>
+                    {% if data[0].holiday == 1 %}  
+                        <option value="1"selected>Yes</option>
+                        <option value="0">No</option>
+                    {% else %}
+                        <option value="1">Yes</option>
+                        <option value="0" selected>No</option>
+                    {% endif %}
+                    </select>
 
                 </fieldset>
                 <input type="submit" value="Save Date" name="edit_date" class="btn btn-primary" style="margin:.5rem;">
-                <a href='/dates'><input class="btn" type="button" value="cancel"></a>
+                <a href='/dates'><input class="btn" type="button" value="Cancel"></a>
             </form>
 
 </html>

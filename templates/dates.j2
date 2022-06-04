@@ -64,14 +64,14 @@ Source URL: https://github.com/osu-cs340-ecampus/flask-starter-app
     <a href="guests">Guests</a> |
     <a href="orders">Orders</a> |
     <a href="attractions">Attractions</a> |
-    <a href="dates">Dates</a> |
+    <a href="dates">Dates</a> | 
     <a href="guests_has_attractions">Rides Ridden by Guests</a> |
     <a href="master_table">Master Table</a>
     ]
 
     <div id="browse"
     <p> </p>
-    <p>'dates' Table:</p>
+    <p><strong>Dates Table</strong></p>
 
 <table border="1" cellpadding="5">
             <!-- Access data tuple passed from app.py --> 
@@ -108,7 +108,7 @@ Source URL: https://github.com/osu-cs340-ecampus/flask-starter-app
                 {% endif %} 
         </table>   
 
-    
+     
     <p></p>
     <input type="submit" value="Add Date" onClick="newDate()">
     </div> <!-- end of browse -->
@@ -119,11 +119,23 @@ Source URL: https://github.com/osu-cs340-ecampus/flask-starter-app
                 <fieldset class="fields">
                 <label> Date: </label> <input type="date" name="date" required>
                 <label> Weather: </label> <input type="text" name="weather" required>
-                <label> Day of Week: </label> <input type="text" name="day_of_week" required> 
-
-                <label> Holiday? </label> <select name="holiday" required>
+                <label> Day of Week: </label>
+                <select required name="day_of_week" id="day_of_week>
+                    <option disable selected value=>Please select a Day of the Week</option>
+                    <option value="blank">Blank</option>
+                    <option value="Monday">Monday</option>
+                    <option value="Tuesday">Tuesday</option>
+                    <option value="Wednesday">Wednesday</option>
+                    <option value="Thursday">Thursday</option>
+                    <option value="Friday">Friday</option>
+                    <option value="Saturday">Saturday</option>
+                    <option value="Sunday">Sunday</option>
+                </select>
+                <label> Holiday? </label> 
+                <select name="holiday" required>
                     <option value="1">Yes</option>
-                    <option value="0">No</option>
+                    <option value="0" selected>No</option>
+                </select>
           </fieldset>
               <input class="btn" type="submit" id="addDate" value="Add Date">
               <input class="btn" type="button" value="Cancel" onClick="browseDates()">

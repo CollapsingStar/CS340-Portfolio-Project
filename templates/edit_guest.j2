@@ -14,6 +14,20 @@ Source URL: https://github.com/osu-cs340-ecampus/flask-starter-app
 </head>
 
 <body>
+    <h1>Guests</h1>
+    <h2>Create, Read, Update, and Delete the guests currently registered with the park.</h2>
+    [
+    <a href="home">Home Page</a> |
+    <a href="guests">Guests</a> |
+    <a href="orders">Orders</a> |
+    <a href="attractions">Attractions</a> |
+    <a href="dates">Dates</a> |
+    <a href="guests_has_attractions">Rides Ridden by Guests</a> |
+    <a href="master_table">Master Table</a>
+    ]
+
+    <p> </p>
+
     <div>
         <table border="1" cellpadding="5">
             <!-- Access data tuple passed from app.py --> 
@@ -53,7 +67,7 @@ Source URL: https://github.com/osu-cs340-ecampus/flask-starter-app
                     
                     <label for="guest_name">Name:</label>
                     <input type="text" value="{{data[0].guest_name}}" class="form-control" id="guest_name" name="guest_name" pattern="^[a-zA-Z]+( [a-zA-Z]+)*$" required>
-
+ 
                     {# Citation for the following function:
                     ## Date: 6/1/2022
                     ## Copied from /OR/ Adapted from /OR/ Based on: Copied from regex answer (how to format email type) on StackOverflow
@@ -67,7 +81,7 @@ Source URL: https://github.com/osu-cs340-ecampus/flask-starter-app
                 
                 </fieldset>
                 <input type="submit" value="Save Update Guest" name="edit_guest" class="btn btn-primary" style="margin:.5rem;">
-                <a href='/guests'><input class="btn" type="button" value="cancel"></a>
+                <a href='/guests'><input class="btn" type="button" value="Cancel"></a>
             </form>
 
 </html>

@@ -208,12 +208,22 @@ def orders():
 # UPDATE
 @app.route("/edit_order/<int:order_id>", methods=["POST", "GET"])
 def edit_order(order_id):
+    query = "SELECT guest_id FROM guests;"
+    cursor = mysql.connection.cursor()
+    cursor.execute(query)
+    guest_ids = cursor.fetchall()
+
+    query = "SELECT date FROM dates;"
+    cursor = mysql.connection.cursor()
+    cursor.execute(query)
+    dates = cursor.fetchall()
+
     if request.method == "GET":
         query = "SELECT * FROM orders WHERE order_id = '%s'" % (order_id)
         cur = mysql.connection.cursor()
         cur.execute(query)
         data = cur.fetchall()
-        return render_template("edit_order.j2", data=data)
+        return render_template("edit_order.j2", data=data, guest_ids=guest_ids, dates=dates)
 
     if request.method == "POST":
         guest_id = request.form["guest_id"]

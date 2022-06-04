@@ -6,14 +6,28 @@ Date: 6/1/2022
 Copied from /OR/ Adapted from /OR/ Based on: Copied from The OSU CS340 Flask Guide
 Source URL: https://github.com/osu-cs340-ecampus/flask-starter-app
 #}
-
-<html>
+ 
+<html> 
 <head>
 	<title>Edit Order</title>
     <link href="style.css" rel="stylesheet" type="text/css" />
 </head>
 
 <body>
+    <h1>Orders</h1>
+    <h2>Create, Read, Update, and Delete orders that guest have placed.</h2>
+
+    [
+    <a href="home">Home Page</a> |
+    <a href="guests">Guests</a> |
+    <a href="orders">Orders</a> |
+    <a href="attractions">Attractions</a> |
+    <a href="dates">Dates</a> |
+    <a href="guests_has_attractions">Rides Ridden by Guests</a> |
+    <a href="master_table">Master Table</a>
+    ]
+
+    <p> </p>
     <div>
         <table border="1" cellpadding="5">
             <!-- Access data tuple passed from app.py --> 
@@ -48,28 +62,50 @@ Source URL: https://github.com/osu-cs340-ecampus/flask-starter-app
             <!-- form to edit data in orders-->
             <form id="updateOrder" action="/edit_order/{{data[0].order_id}}" method="post">
                 <legend><strong>Edit Order</strong></legend>
-                <fieldset>
-                    <input type="hidden" value="{{data[0].order_id}}" class="form-control" id="order_id" name="order_id" required>
-                    
-                    <label for="guest_id">Guest_ID:</label>
-                    <input type="text" value="{{data[0].guest_id}}" class="form-control" id="guest_id" name="guest_id" pattern="{1-9}">
-
-                    <label> Season Pass Holder: </label> <select name="season_pass_holder" value="1" required>
-                    <option value="1">Yes</option>
-                    <option value="0">No</option>
-                    </select>
-
-                    <label for="date">Date:</label>
-                    <input type="text" value="{{data[0].date}}" class="form-control" id="date" name="date">
-
-                   <label> Ticket: </label> <select name="ticket" value="1" required>
-                    <option value="1">Yes</option>
-                    <option value="0">No</option>
-                    </select>
-                
-
-                </fieldset>
+                    <fieldset class="fields">
+                        <label> Guest ID: </label> 
+                        <select required name="guest_id" id="guest_id">
+                            {% for guest in guest_ids %}
+                                {% if guest['guest_id'] == data[0].guest_id %}
+                                    <option value="{{ guest['guest_id'] }}" selected>{{ guest['guest_id'] }}</option>
+                                {% else %}
+                                    <option value="{{ guest['guest_id'] }}">{{ guest['guest_id'] }}</option>
+                                {% endif %}
+                            {% endfor %}
+                        </select>
+                        <label> Date: </label> 
+                        <select required name="date" id="date">
+                        <option disable selected value=>Choose a Date</option>
+                            {% for date in dates %}
+                                {% if date['date'] == data[0].date %}
+                                    <option value="{{ date['date'] }}" selected>{{ date['date'] }}</option>
+                                {% else %}
+                                    <option value="{{ date['date'] }}">{{ date['date'] }}</option>
+                                {% endif %}
+                            {% endfor %}
+                        </select>
+                        <label> Ticket: </label> 
+                        <select required name="ticket" id="ticket">
+                        {% if data[0].ticket == 1 %}
+                            <option value ="1" >False</option>
+                            <option value ="0" selected>True</option>
+                        {% else %}
+                            <option value ="1" selected>False</option>
+                            <option value ="0" >True</option>
+                        {% endif %}
+                        </select>
+                        <label> Season Pass Holder: </label> 
+                        <select required name="season_pass_holder" id="season_pass_holder">
+                        {% if data[0].season_pass_holder == 1 %}
+                            <option value ="1" >False</option>
+                            <option value ="0" selected>True</option>
+                        {% else %}
+                            <option value ="1" selected>False</option>
+                            <option value ="0" >True</option>
+                        {% endif %}
+                        </select>
+                    </fieldset>
                 <input type="submit" value="Save Update Order" name="edit_order" class="btn btn-primary" style="margin:.5rem;">
-                <a href='/orders'><input class="btn" type="button" value="cancel"></a>
+                <a href='/orders'><input class="btn" type="button" value="Cancel"></a>
             </form>
 </html>

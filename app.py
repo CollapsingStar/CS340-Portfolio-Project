@@ -113,6 +113,11 @@ def edit_guest(guest_id):
 # CREATE / READ 
 @app.route('/attractions',  methods=["POST", "GET"])
 def attractions():
+    query = "SELECT date FROM dates;"
+    cursor = mysql.connection.cursor()
+    cursor.execute(query)
+    dates = cursor.fetchall()
+
     if request.method == "POST":
         ride_name = request.form["ride_name"]
         date_created = request.form["date_created"]
@@ -129,7 +134,7 @@ def attractions():
         cursor = mysql.connection.cursor()
         cursor.execute(query)
         results = cursor.fetchall()
-        return render_template("attractions.j2", attractions=results)
+        return render_template("attractions.j2", attractions=results, dates = dates)
 
 # DELETE
 @app.route("/delete_attraction/<int:ride_id>")
@@ -143,12 +148,17 @@ def delete_attraction(ride_id):
 # UPDATE
 @app.route("/edit_attraction/<int:ride_id>", methods=["POST", "GET"])
 def edit_attraction(ride_id):
+    query = "SELECT date FROM dates;"
+    cursor = mysql.connection.cursor()
+    cursor.execute(query)
+    dates = cursor.fetchall()
+
     if request.method == "GET":
         query = "SELECT * FROM attractions WHERE ride_id = '%s'" % (ride_id)
         cur = mysql.connection.cursor()
         cur.execute(query)
         data = cur.fetchall()
-        return render_template("edit_attraction.j2", data=data)
+        return render_template("edit_attraction.j2", data=data, dates=dates)
 
     if request.method == "POST":
         ride_id = request.form["ride_id"]
@@ -177,7 +187,7 @@ def orders():
     cursor = mysql.connection.cursor()
     cursor.execute(query)
     dates = cursor.fetchall()
-    
+
     if request.method == "POST":
         guest_id = request.form["Guest_ID"]
         date = request.form["date_created"]
@@ -308,6 +318,21 @@ def delete_date(date):
 # CREATE / READ
 @app.route('/guests_has_attractions', methods=["POST", "GET"])
 def guests_has_attractions():
+    query = "SELECT guest_id FROM guests;"
+    cursor = mysql.connection.cursor()
+    cursor.execute(query)
+    guest_ids = cursor.fetchall()
+
+    query = "SELECT date FROM dates;"
+    cursor = mysql.connection.cursor()
+    cursor.execute(query)
+    dates = cursor.fetchall()
+
+    query = "SELECT ride_id FROM attractions;"
+    cursor = mysql.connection.cursor()
+    cursor.execute(query)
+    ride_ids = cursor.fetchall()
+
     if request.method == "POST":
         ride_id = request.form["ride_id"]
         date_created = request.form["date"]
@@ -323,7 +348,7 @@ def guests_has_attractions():
     cursor = mysql.connection.cursor()
     cursor.execute(query)
     results = cursor.fetchall()
-    return render_template("guests_has_attractions.j2", guests_has_attractions=results)
+    return render_template("guests_has_attractions.j2", guests_has_attractions=results, guest_ids=guest_ids, dates=dates, ride_ids=ride_ids)
 
 # DELETE
 @app.route("/delete_guests_has_attractions/<int:guest_attraction_id>")
@@ -340,6 +365,11 @@ def delete_guests_has_attractions(guest_attraction_id):
 # CREATE / READ
 @app.route('/master_table',  methods=["POST", "GET"])
 def master_table():
+    query = "SELECT date FROM dates;"
+    cursor = mysql.connection.cursor()
+    cursor.execute(query)
+    dates = cursor.fetchall() 
+
     if request.method == "POST":
         date = request.form["date"]
         total_guests = request.form["total_guests"]
@@ -364,17 +394,22 @@ def master_table():
         cursor = mysql.connection.cursor()
         cursor.execute(query)
         results = cursor.fetchall()
-        return render_template("master_table.j2", master_table=results)
+        return render_template("master_table.j2", master_table=results, dates=dates)
 
 # UPDATE
 @app.route("/edit_master_table/<int:table_id>", methods=["POST", "GET"])
 def edit_master_table(table_id):
+    query = "SELECT date FROM dates;"
+    cursor = mysql.connection.cursor()
+    cursor.execute(query)
+    dates = cursor.fetchall() 
+
     if request.method == "GET":
         query = "SELECT * FROM master_table WHERE table_id = '%s'" % (table_id)
         cur = mysql.connection.cursor()
         cur.execute(query)
         data = cur.fetchall()
-        return render_template("edit_master_table.j2", data=data)
+        return render_template("edit_master_table.j2", data=data, dates=dates)
 
     if request.method == "POST":
         table_id = request.form["table_id"]

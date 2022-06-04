@@ -65,6 +65,8 @@ Source URL: https://github.com/osu-cs340-ecampus/flask-starter-app
                     <fieldset class="fields">
                         <label> Guest ID: </label> 
                         <select required name="guest_id" id="guest_id">
+                            <option disable selected value=></option>
+                            <option value="">None</option>
                             {% for guest in guest_ids %}
                                 {% if guest['guest_id'] == data[0].guest_id %}
                                     <option value="{{ guest['guest_id'] }}" selected>{{ guest['guest_id'] }}</option>

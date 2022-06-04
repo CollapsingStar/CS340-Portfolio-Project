@@ -168,6 +168,16 @@ def edit_attraction(ride_id):
 # CREATE / READ
 @app.route('/orders', methods=["POST", "GET"])
 def orders():
+    query = "SELECT guest_id FROM guests;"
+    cursor = mysql.connection.cursor()
+    cursor.execute(query)
+    guest_ids = cursor.fetchall()
+
+    query = "SELECT date FROM dates;"
+    cursor = mysql.connection.cursor()
+    cursor.execute(query)
+    dates = cursor.fetchall()
+    
     if request.method == "POST":
         guest_id = request.form["Guest_ID"]
         date = request.form["date_created"]
@@ -193,7 +203,7 @@ def orders():
         cursor = mysql.connection.cursor()
         cursor.execute(query)
         results = cursor.fetchall()
-        return render_template("orders.j2", orders=results)
+        return render_template("orders.j2", orders=results, guest_ids=guest_ids, dates=dates)
 
 # UPDATE
 @app.route("/edit_order/<int:order_id>", methods=["POST", "GET"])

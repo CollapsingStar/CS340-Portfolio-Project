@@ -1,4 +1,4 @@
-{# Allows editing on the orders table #}
+{# Allows create/read on the orders table #}
 {#
 CS340 Portfolio Project
 Citation for the following function: Holistic citation for CRUD operations in Flask (followed guide)
@@ -6,14 +6,57 @@ Date: 6/1/2022
 Copied from /OR/ Adapted from /OR/ Based on: Copied from The OSU CS340 Flask Guide
 Source URL: https://github.com/osu-cs340-ecampus/flask-starter-app
 #}
- 
-<html> 
+
+<html>
 <head>
-	<title>Edit Order</title>
-    <link href="style.css" rel="stylesheet" type="text/css" />
+<title>Orders</title>
+<link href="style.css" rel="stylesheet" type="text/css" />
+<script language="JavaScript">
+		function showform(dowhat) {
+			/*
+			* four DIVS: browse, insert, update, delete
+			* this function sets one visible the others not
+			*/
+			if (dowhat == 'insert'){
+				document.getElementById('browse').style.display = 'none';
+				document.getElementById('insert').style.display = 'block';
+				document.getElementById('update').style.display = 'none';
+				document.getElementById('delete').style.display = 'none';
+			}
+			else if (dowhat == 'update'){
+				document.getElementById('browse').style.display = 'none';
+				document.getElementById('insert').style.display = 'none';
+				document.getElementById('update').style.display = 'block';
+				document.getElementById('delete').style.display = 'none';
+			}
+			else if (dowhat == 'delete'){
+				document.getElementById('browse').style.display = 'none';
+				document.getElementById('insert').style.display = 'none';
+				document.getElementById('update').style.display = 'none';
+				document.getElementById('delete').style.display = 'block';
+			}
+      else if (dowhat == 'all'){
+				document.getElementById('browse').style.display = 'block';
+				document.getElementById('insert').style.display = 'block';
+				document.getElementById('update').style.display = 'block';
+				document.getElementById('delete').style.display = 'block';
+			}
+			else { //by default display browse
+				document.getElementById('browse').style.display = 'block';
+				document.getElementById('insert').style.display = 'none';
+				document.getElementById('update').style.display = 'none';
+				document.getElementById('delete').style.display = 'none';
+			}
+		}
+    function newOrd() { showform('insert'); }
+    function updateOrd(pid) { showform('update'); }
+    function deleteOrd(pid) { showform ('delete'); }
+    function browseOrds() { showform ('browse'); }
+    function showAll() { showform ('all'); }
+</script>
 </head>
 
-<body>
+<body onload="browseOrds()">
     <h1>Orders</h1>
     <h2>Create, Read, Update, and Delete orders that guest have placed.</h2>
 
@@ -27,21 +70,24 @@ Source URL: https://github.com/osu-cs340-ecampus/flask-starter-app
     <a href="master_table">Master Table</a>
     ]
 
+    <div id="browse"
     <p> </p>
-    <div>
-        <table border="1" cellpadding="5">
+    <p><strong>Orders Table</strong></p>
+
+<table border="1" cellpadding="5">
             <!-- Access data tuple passed from app.py --> 
             {% if orders %}
 			    <thead>
 				    <tr>
 					    <!-- Iterate through each key in the first entry to get the column name -->
-                        {% for key in ord[0].keys() %}
+                        {% for key in orders[0].keys() %}
 					    
                         <!-- Create a <th> tag with the key inside of it, this will be our header row -->
 					    <th scope="col" data-field="{{ key }}" data-filter-control="input">{{ key }}</th>
 					
                         <!-- End of this for loop -->
                         {% endfor %} 
+                        <th colspan = "2"> Modify </th>
                     </tr>
 
 				<tbody>
@@ -53,61 +99,77 @@ Source URL: https://github.com/osu-cs340-ecampus/flask-starter-app
 						    <!-- Create a <td> element with the value of that key in it -->
 						    <td> {{order[key]}} </td> 
                             {% endfor %}
-					    </tr> 
+
+                            <!-- Create our edit/delete buttons -->
+						    <td><a href="edit_order/{{order.order_id}}" class="btn btn-default">Edit</a></td>
+						    <td><a href="delete_order/{{order.order_id}}" class="btn btn-default">Delete</a></td>
+
+					    </tr>  
                         {% endfor %} 
-            {% endif %} 
+                {% endif %} 
         </table>   
 
-        <div id="update">
-            <!-- form to edit data in orders-->
-            <form id="updateOrder" action="/edit_order/{{data[0].order_id}}" method="post">
-                <legend><strong>Edit Order</strong></legend>
-                    <fieldset class="fields">
-                        <label> Guest ID: </label> 
-                        <select required name="guest_id" id="guest_id">
-                            <option disable selected value=></option>
-                            <option value="">None</option>
-                            {% for guest in guest_ids %}
-                                {% if guest['guest_id'] == data[0].guest_id %}
-                                    <option value="{{ guest['guest_id'] }}" selected>{{ guest['guest_id'] }}</option>
-                                {% else %}
-                                    <option value="{{ guest['guest_id'] }}">{{ guest['guest_id'] }}</option>
-                                {% endif %}
-                            {% endfor %}
-                        </select>
-                        <label> Date: </label> 
-                        <select required name="date" id="date">
-                        <option disable selected value=>Choose a Date</option>
-                            {% for date in dates %}
-                                {% if date['date'] == data[0].date %}
-                                    <option value="{{ date['date'] }}" selected>{{ date['date'] }}</option>
-                                {% else %}
-                                    <option value="{{ date['date'] }}">{{ date['date'] }}</option>
-                                {% endif %}
-                            {% endfor %}
-                        </select>
-                        <label> Ticket: </label> 
-                        <select required name="ticket" id="ticket">
-                        {% if data[0].ticket == 1 %}
-                            <option value ="1" >False</option>
-                            <option value ="0" selected>True</option>
-                        {% else %}
-                            <option value ="1" selected>False</option>
-                            <option value ="0" >True</option>
-                        {% endif %}
-                        </select>
-                        <label> Season Pass Holder: </label> 
-                        <select required name="season_pass_holder" id="season_pass_holder">
-                        {% if data[0].season_pass_holder == 1 %}
-                            <option value ="1" >False</option>
-                            <option value ="0" selected>True</option>
-                        {% else %}
-                            <option value ="1" selected>False</option>
-                            <option value ="0" >True</option>
-                        {% endif %}
-                        </select>
-                    </fieldset>
-                <input type="submit" value="Save Update Order" name="edit_order" class="btn btn-primary" style="margin:.5rem;">
-                <a href='/orders'><input class="btn" type="button" value="Cancel"></a>
-            </form>
+    <p></p> 
+    <input type="submit" value="Add Order" onClick="newOrd()">
+    </div> <!-- end of browse -->
+    <div id="insert">
+        <form method="POST" id="addOrd">
+            <p></p>
+            <legend><strong>Add Order</strong></legend>
+              <fieldset class="fields">
+                <label> Guest ID: </label> 
+                <select required name="Guest_ID" id="Guest_ID">
+                    <option disable selected value=></option>
+                    <option value="">None</option> 
+                    {% for guest in guest_ids %}
+                        <option value="{{ guest['guest_id'] }}">{{ guest['guest_id'] }}</option>
+                    {% endfor %}
+                </select> 
+                <label> Date: </label> 
+                <select required name="date_created" id="date_created">
+                    <option disable selected value=></option>
+                    {% for date in dates %}
+                        <option value="{{ date['date'] }}">{{ date['date'] }}</option>
+                    {% endfor %}
+                </select>
+                <label> Ticket: </label> 
+                <select required name="ticket" id="ticket">
+                    <option disable selected value=></option>
+                    <option value ="1">False</option>
+                    <option value ="0">True</option>
+                </select>
+                <label> Season Pass Holder: </label> 
+                <select required name="season_pass" id="season_pass">
+                    <option disable selected value=></option>
+                    <option value ="1">False</option>
+                    <option value ="0">True</option>
+                </select>
+          </fieldset>
+              <input class="btn" type="submit" id="addOrder" value="Add Order">
+              <input class="btn" type="button" value="Cancel" onClick="browseOrds()">
+        </form> 
+    </div><!-- insert -->
+    <p>&nbsp;</p>
+    <div id="update">
+        <form method="POST" id="updateOrd">
+            <legend><strong>Update Order</strong></legend>
+              <fieldset class="fields">
+                <label> Order ID: </label> 72
+                <label> Guest ID: </label> <input type="text" name="Guest_ID" value="15">
+                <label> Date: </label> <input type="text" name="date_created" value="2022-04-29" required>
+                <label> Ticket: </label> <select name="ticket" value="1" required>
+                    <option value="1">Yes</option>
+                    <option value="0">No</option>
+                </select>
+                <label> Season Pass: </label> <select name="season_pass" value="0" required>
+                    <option value="1">Yes</option>
+                    <option value="0">No</option>
+                </select>
+          </fieldset>
+              <input class="btn" type="submit" id="UpdateSaveOrder" value="Save Update Order">
+              <input class="btn" type="button" value="Cancel" onClick="browseOrds()">
+        </form> 
+    </div><!-- update -->
+    <p>&nbsp;</p>
+</body>
 </html>

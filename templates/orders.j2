@@ -110,17 +110,39 @@ Source URL: https://github.com/osu-cs340-ecampus/flask-starter-app
         </table>   
 
     <p></p> 
-    <input type="submit" value="Add Order" onClick="newOrd()">
+   <input type="submit" value="Add Order" onClick="newOrd()">
     </div> <!-- end of browse -->
     <div id="insert">
         <form method="POST" id="addOrd">
             <p></p>
             <legend><strong>Add Order</strong></legend>
               <fieldset class="fields">
-                <label> Guest ID: </label> <input type="text" name="Guest_ID" >
-                <label> Date: </label> <input type="text" name="date_created" required>
-                <label> Ticket: </label> <input type="text" name="ticket" required>
-                <label> Season Pass Holder: </label> <input type="text" name="season_pass" required>
+                <label> Guest ID: </label> 
+                <select required name="Guest_ID" id="Guest_ID">
+                    <option disable selected value=></option>
+                    {% for guest in guest_ids %}
+                        <option value="{{ guest['guest_id'] }}">{{ guest['guest_id'] }}</option>
+                    {% endfor %}
+                </select>
+                <label> Date: </label> 
+                <select required name="date_created" id="date_created">
+                    <option disable selected value=></option>
+                    {% for date in dates %}
+                        <option value="{{ date['date'] }}">{{ date['date'] }}</option>
+                    {% endfor %}
+                </select>
+                <label> Ticket: </label> 
+                <select required name="ticket" id="ticket">
+                    <option disable selected value=></option>
+                    <option value ="1">False</option>
+                    <option value ="0">True</option>
+                </select>
+                <label> Season Pass Holder: </label> 
+                <select required name="season_pass" id="season_pass">
+                    <option disable selected value=></option>
+                    <option value ="1">False</option>
+                    <option value ="0">True</option>
+                </select>
           </fieldset>
               <input class="btn" type="submit" id="addOrder" value="Add Order">
               <input class="btn" type="button" value="Cancel" onClick="browseOrds()">

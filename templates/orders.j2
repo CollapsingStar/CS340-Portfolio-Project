@@ -58,7 +58,7 @@ Source URL: https://github.com/osu-cs340-ecampus/flask-starter-app
 
 <body onload="browseOrds()">
     <h1>Orders</h1>
-    <h2>Create, Read, Update, and Delete the online guest orders made with the park.</h2>
+    <h2>Create, Read, Update, and Delete orders that guest have placed.</h2>
 
     [
     <a href="home">Home Page</a> |
@@ -72,7 +72,7 @@ Source URL: https://github.com/osu-cs340-ecampus/flask-starter-app
 
     <div id="browse"
     <p> </p>
-    <p>'orders' Table:</p>
+    <p><strong>Orders placed: </strong></p>
 
 <table border="1" cellpadding="5">
             <!-- Access data tuple passed from app.py --> 
@@ -104,13 +104,13 @@ Source URL: https://github.com/osu-cs340-ecampus/flask-starter-app
 						    <td><a href="edit_order/{{order.order_id}}" class="btn btn-default">Edit</a></td>
 						    <td><a href="delete_order/{{order.order_id}}" class="btn btn-default">Delete</a></td>
 
-					    </tr> 
+					    </tr>  
                         {% endfor %} 
                 {% endif %} 
         </table>   
 
     <p></p> 
-   <input type="submit" value="Add Order" onClick="newOrd()">
+    <input type="submit" value="Add Order" onClick="newOrd()">
     </div> <!-- end of browse -->
     <div id="insert">
         <form method="POST" id="addOrd">

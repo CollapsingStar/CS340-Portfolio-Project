@@ -70,7 +70,7 @@ Source URL: https://github.com/osu-cs340-ecampus/flask-starter-app
 
     <div id="browse"
     <p> </p>
-    <p>'attractions' Table:</p>
+    <p><strong>Attractions Table</strong></p>
 
 <table border="1" cellpadding="5">
             <!-- Access data tuple passed from app.py --> 
@@ -106,20 +106,26 @@ Source URL: https://github.com/osu-cs340-ecampus/flask-starter-app
                         {% endfor %} 
                 {% endif %} 
         </table>   
-
+ 
 
     <p></p>
-    <input type="submit" value="Add Ride" onClick="newAttr()">
+    <input type="submit" value="Add Attraction" onClick="newAttr()">
     </div> <!-- end of browse -->
     <div id="insert">
         <form method="POST" id="addRide">
             <p></p>
-            <legend><strong>Add Ride</strong></legend>
+            <legend><strong>Add Attraction</strong></legend>
               <fieldset class="fields">
-                <label> Ride Name </label> <input type="text" name="ride_name" required>
-                <label> Date Created </label> <input type="date" name="date_created" required>
+                <label> Attraction Name </label> <input type="text" name="ride_name" required>
+                <label> Date Created: </label> 
+                <select required name="date_created" id="date_created">
+                    <option disable selected value=>Please select a pre-existing date</option>
+                    {% for date in dates %}
+                        <option value="{{ date['date'] }}">{{ date['date'] }}</option>
+                    {% endfor %}
+                </select>
           </fieldset>
-              <input class="btn" type="submit" id="addRide" value="Add Ride">
+              <input class="btn" type="submit" id="addRide" value="Add Attraction">
               <input class="btn" type="button" value="Cancel" onClick="browseAttrs()">
         </form> 
     </div><!-- insert -->

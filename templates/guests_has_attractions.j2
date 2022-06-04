@@ -57,8 +57,8 @@ Source URL: https://github.com/osu-cs340-ecampus/flask-starter-app
 </head>
 
 <body onload="browseAttrGuest()">
-    <h1> Attractions/Guests Intersection </h1>
-    <h2>Create, Read, and Delete the entries intersecting guests and attractions in the park.</h2>
+    <h1>  Attractions Ridden by Guests </h1>
+    <h2>Create, Read, and Delete the entries of guests riding attractions in in the park.</h2>
     [
     <a href="home">Home Page</a> |
     <a href="guests">Guests</a> |
@@ -71,7 +71,7 @@ Source URL: https://github.com/osu-cs340-ecampus/flask-starter-app
 
     <div id="browse"
     <p> </p>
-    <p>'guests_has_attractions' Table:</p>
+    <p><strong> Attractions Ridden by Guests Table</strong></p>
 
 <table border="1" cellpadding="5">
             <!-- Access data tuple passed from app.py --> 
@@ -104,7 +104,7 @@ Source URL: https://github.com/osu-cs340-ecampus/flask-starter-app
                         {% endfor %} 
                 {% endif %} 
         </table>   
-
+ 
     <p></p>
     <p></p>
     <input type="submit" value="Add Guest/Ride Interaction" onClick="newAttrGuest()">
@@ -114,9 +114,28 @@ Source URL: https://github.com/osu-cs340-ecampus/flask-starter-app
             <p></p>
             <legend><strong>Add Guest/Ride Interaction</strong></legend>
               <fieldset class="fields">
-                <label> Ride ID </label> <input type="number" name="ride_id" required>
-                <label> Date </label> <input type="date" name="date" required>
-                <label> Guest ID </label> <input type="number" name="guest_id" required>
+                <label> Guest ID </label> 
+                <select required name="guest_id" id="guest_id">
+                    <option disable selected value=></option> 
+                    {% for guest in guest_ids %}
+                        <option value="{{ guest['guest_id'] }}">{{ guest['guest_id'] }}</option>
+                    {% endfor %}
+                </select> 
+                <label> Ride ID </label> 
+                <select required name="ride_id" id="ride_id">
+                    <option disable selected value=></option>
+                    {% for ride in ride_ids %}
+                        <option value="{{ ride['ride_id'] }}">{{ ride['ride_id'] }}</option>
+                    {% endfor %}
+                </select> 
+                <label> Date </label> 
+                <select required name="date" id="date">
+                    <option disable selected value=></option>
+                    {% for date in dates %}
+                        <option value="{{ date['date'] }}">{{ date['date'] }}</option>
+                    {% endfor %}
+                </select>
+                
           </fieldset>
               <input class="btn" type="submit" id="addRide" value="Add Ride">
               <input class="btn" type="button" value="Cancel" onClick="browseAttrGuest()">

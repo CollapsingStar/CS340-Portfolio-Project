@@ -14,6 +14,19 @@ Source URL: https://github.com/osu-cs340-ecampus/flask-starter-app
 </head>
 
 <body>
+    <h1>Attractions</h1>
+    <h2>Create, Read, Update, and Delete the attractions (rides) situated in the park.</h2>
+    [
+    <a href="home">Home Page</a> |
+    <a href="guests">Guests</a> |
+    <a href="orders">Orders</a> |
+    <a href="attractions">Attractions</a> |
+    <a href="dates">Dates</a> |
+    <a href="guests_has_attractions">Rides Ridden by Guests</a> |
+    <a href="master_table">Master Table</a>
+    ]
+
+    <p> </p>
     <div>
         <table border="1" cellpadding="5">
             <!-- Access data tuple passed from app.py --> 
@@ -57,9 +70,18 @@ Source URL: https://github.com/osu-cs340-ecampus/flask-starter-app
                     <label for="date">Ride Name:</label>
                     <input type="text" value="{{data[0].ride_name}}" class="form-control" id="ride_name" name="ride_name" required>
 
-                    <label> Date: </label> <input type="date" name="date_created" required>
+                    <label> Date Created: </label> 
+                    <select required name="date_created" id="date_created">
+                        {% for date in dates %}
+                            {% if date['date'] == data[0].date_created %}
+                                <option value="{{ date['date'] }}" selected>{{ date['date'] }}</option>
+                            {% else %}
+                                <option value="{{ date['date'] }}">{{ date['date'] }}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
                 </fieldset>
                 <input type="submit" value="Save Attraction" name="edit_attraction" class="btn btn-primary" style="margin:.5rem;">
-                <a href='/attractions'><input class="btn" type="button" value="cancel"></a>
+                <a href='/attractions'><input class="btn" type="button" value="Cancel"></a>
             </form>
 </html>

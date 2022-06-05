@@ -1,1 +1,133 @@
+@import url('https://fonts.googleapis.com/css2?family=Joan&display=swap');
+
+ 
+body {
+  color: #01161E ;
+  background-color: #E2DADB;
+  font-family: 'Joan';
+  font-size: 20px;
+  margin:7px;;
+  padding:10px; 
+}
+
+a:link{
+  color: #E2DADB;
+  background-color: #124559;
+  font-weight:bold;
+  text-decoration:none;
+  border-radius:10px;
+  padding:0.50%;
+  margin-left:0%;
+}
+
+a:visited {
+  color: #E2DADB;
+  background-color: #124559;
+  font-weight:bold;
+  text-decoration:none;
+  border-radius:10px;
+  padding:0.5%;
+  margin-left:1%;
+}
+
+a:hover {
+  background-color:#005e00;
+  color:#a7cced;
+  border-radius:10px;
+  padding:0.75%;
+  margin-left:0%;
+}
+
+a:active {
+  background-color:#a7cced;
+  color:#124559;
+}
+
+
+
+main {margin-top: -5px}
+footer{
+  position:absolute;
+  bottom:15px;
+  left:center;
+ }
+
+table {
+  font-family:'Joan';
+  border-collapse: collapse;
+}
+
+table.center {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+caption {
+  background-color:#000000;  
+  border:3px solid #a7cced;
+  border-radius:3px 3px 0 0; 
+  color:#0d0630;
+
+  padding:1% 0;
+}
+thead {
+  height:25px;
+  }
+
+tbody {
+  text-align:center;
+  }
+tr td {
+  border-bottom:3px solid #124559;
+  min-width:100px;
+  }
+tr th {
+  background-color:#a7cced;
+  color: #01161E;
+  padding:0.1%;
+  min-width:100px;
+}
+th, td {border:3px solid #124559;}
+
+tr:nth-child(odd) td {background-color:#979797;}
+tr:nth-child(even) th {background-color:#8299c4;}
+
+fieldset, label, input, button {
+  font-family: 'Joan';
+  background-color:#124559;
+  color: #E2DADB;
+  padding:0.5%;
+  border-radius:10px;
+}
+
+legend {
+  background-color: #a7cced;
+  color: #0d0630;
+  border-radius: 2px;
+}
+
+input {
+  padding: 0.75%;
+  background-color: #124559;
+}
+
+input:hover {
+  background-color:#005e00;
+  color:#a7cced;
+  border-radius:10px;
+  padding:0.75%;
+  margin-left:0%;
+}
+
+input:active {
+  background-color:#a7cced;
+  color:#124559;
+}
+
+button {
+  padding: 0.75;
+  background-color: #8299c4;
+  color: #0d0630
+}
+
 

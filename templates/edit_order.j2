@@ -10,12 +10,14 @@ Source URL: https://github.com/osu-cs340-ecampus/flask-starter-app
 <html> 
 <head>
 	<title>Edit Order</title>
-    <link href="style.css" rel="stylesheet" type="text/css" />
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/style.css') }}">
 </head>
 
 <body>
+    <img src="{{ url_for('static',filename='img/CCP_Logo.png') }}" align="left"/>
     <h1>Orders</h1>
     <h2>Create, Read, Update, and Delete orders that guest have placed.</h2>
+    <br></br>
 
     [
     <a href="/home">Home Page</a> |
@@ -110,4 +112,4 @@ Source URL: https://github.com/osu-cs340-ecampus/flask-starter-app
                 <input type="submit" value="Save Update Order" name="edit_order" class="btn btn-primary" style="margin:.5rem;">
                 <a href='/orders'><input class="btn" type="button" value="Cancel"></a>
             </form>
-</html>
+</html> 

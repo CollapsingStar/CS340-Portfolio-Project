@@ -10,12 +10,14 @@ Source URL: https://github.com/osu-cs340-ecampus/flask-starter-app
 <html>
 <head>
 	<title>Edit Master Table</title>
-    <link href="style.css" rel="stylesheet" type="text/css" />
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/style.css') }}">
 </head>
 
 <body>
+    <img src="{{ url_for('static',filename='img/CCP_Logo.png') }}" align="left"/>
     <h1>Master Table (Daily Data Collection)</h1>
     <h2>View the master records for the park categorized and accumulated by day.</h2>
+    <br></br>
     [
     <a href="/home">Home Page</a> |
     <a href="/guests">Guests</a> |

@@ -13,21 +13,26 @@ Source URL: https://github.com/osu-cs340-ecampus/flask-starter-app
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Manage Cascade Castles</title>
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/style.css') }}">
 </head>
 <body>
+    <img src="{{ url_for('static',filename='img/CCP_Logo.png') }}" align="left"/>
     <h1>Cascade Castles: Portland</h1>
-    <h2>Welcome to Cascade Castles: Portlandm, the best theme park in the Pacific Northwest!</h2>
+    <h2>Welcome to Cascade Castles: Portland, the best theme park in the Pacific Northwest!</h2>
     <h3> Please select an option below to begin managing data tables. </h3>
 
     [
-    <a href="home">Home Page</a> |
-    <a href="guests">Guests</a> |
-    <a href="orders">Orders</a> |
-    <a href="attractions">Attractions</a> |
+    <a href="home">Home Page</a> |  
+    <a href="guests">Guests</a> |  
+    <a href="orders">Orders</a> |  
+    <a href="attractions">Attractions</a> |  
     <a href="dates">Dates</a> |
     <a href="guests_has_attractions">Rides Ridden by Guests</a> |
     <a href="master_table">Master Table</a>
     ]
+
+<p> </p>
+
 
 
 </body>

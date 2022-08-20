@@ -6,4 +6,4 @@ the city of Portland for operating costs. The database tracks guests, attraction
 information. 
 
 
-The project was created using SQL and Flask, and was a group project. 
+The project was created using SQL and Flask, and was a group project. A variety of table relationships were utilized, included 1 to 1, 1 to many, and many to many. 
